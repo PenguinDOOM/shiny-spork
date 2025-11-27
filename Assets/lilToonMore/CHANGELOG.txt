@@ -1,3 +1,6 @@
+Ver. 1.0.2
+Fixed Couldn't open include file 'custom_macro.hlsl'. at line 13
+
 Ver. 1.0.1
 Fixed shader errors with cutout and transparent
 
