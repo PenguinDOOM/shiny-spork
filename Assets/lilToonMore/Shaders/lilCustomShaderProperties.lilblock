@@ -25,13 +25,6 @@
         [lilEnum]       _Main4thTexBlendMode                     ("sBlendModes", Int) = 0
         [lilEnum]       _Main4thTexAlphaMode                     ("sAlphaModes", Int) = 0
                         _Main4thEnableLighting                   ("sEnableLighting", Range(0, 1)) = 1
-        //                 _Main4thDissolveMask                     ("Dissolve Mask", 2D) = "white" {}
-        //                 _Main4thDissolveNoiseMask                ("Dissolve Noise Mask", 2D) = "gray" {}
-        // [lilUVAnim]     _Main4thDissolveNoiseMask_ScrollRotate   ("Scroll", Vector) = (0,0,0,0)
-        //                 _Main4thDissolveNoiseStrength            ("Dissolve Noise Strength", float) = 0.1
-        // [lilHDR]        _Main4thDissolveColor                    ("sColor", Color) = (1,1,1,1)
-        // [lilDissolve]   _Main4thDissolveParams                   ("sDissolveParams", Vector) = (0,0,0.5,0.1)
-        // [lilDissolveP]  _Main4thDissolvePos                      ("Dissolve Position", Vector) = (0,0,0,0)
         [lilFFFB]       _Main4thDistanceFade                     ("sDistanceFadeSettings", Vector) = (0.1,0.01,0,0)
         [lilToggle]     _AudioLink2Main4th                       ("Use AudioLink", Int) = 0
 
@@ -57,13 +50,6 @@
         [lilEnum]       _Main5thTexBlendMode                     ("sBlendModes", Int) = 0
         [lilEnum]       _Main5thTexAlphaMode                     ("sAlphaModes", Int) = 0
                         _Main5thEnableLighting                   ("sEnableLighting", Range(0, 1)) = 1
-        //                 _Main5thDissolveMask                     ("Dissolve Mask", 2D) = "white" {}
-        //                 _Main5thDissolveNoiseMask                ("Dissolve Noise Mask", 2D) = "gray" {}
-        // [lilUVAnim]     _Main5thDissolveNoiseMask_ScrollRotate   ("Scroll", Vector) = (0,0,0,0)
-        //                 _Main5thDissolveNoiseStrength            ("Dissolve Noise Strength", float) = 0.1
-        // [lilHDR]        _Main5thDissolveColor                    ("sColor", Color) = (1,1,1,1)
-        // [lilDissolve]   _Main5thDissolveParams                   ("sDissolveParams", Vector) = (0,0,0.5,0.1)
-        // [lilDissolveP]  _Main5thDissolvePos                      ("Dissolve Position", Vector) = (0,0,0,0)
         [lilFFFB]       _Main5thDistanceFade                     ("sDistanceFadeSettings", Vector) = (0.1,0.01,0,0)
         [lilToggle]     _AudioLink2Main5th                       ("Use AudioLink", Int) = 0
 
@@ -89,13 +75,6 @@
         [lilEnum]       _Main6thTexBlendMode                     ("sBlendModes", Int) = 0
         [lilEnum]       _Main6thTexAlphaMode                     ("sAlphaModes", Int) = 0
                         _Main6thEnableLighting                   ("sEnableLighting", Range(0, 1)) = 1
-        //                 _Main6thDissolveMask                     ("Dissolve Mask", 2D) = "white" {}
-        //                 _Main6thDissolveNoiseMask                ("Dissolve Noise Mask", 2D) = "gray" {}
-        // [lilUVAnim]     _Main6thDissolveNoiseMask_ScrollRotate   ("Scroll", Vector) = (0,0,0,0)
-        //                 _Main6thDissolveNoiseStrength            ("Dissolve Noise Strength", float) = 0.1
-        // [lilHDR]        _Main6thDissolveColor                    ("sColor", Color) = (1,1,1,1)
-        // [lilDissolve]   _Main6thDissolveParams                   ("sDissolveParams", Vector) = (0,0,0.5,0.1)
-        // [lilDissolveP]  _Main6thDissolvePos                      ("Dissolve Position", Vector) = (0,0,0,0)
         [lilFFFB]       _Main6thDistanceFade                     ("sDistanceFadeSettings", Vector) = (0.1,0.01,0,0)
         [lilToggle]     _AudioLink2Main6th                       ("Use AudioLink", Int) = 0
         

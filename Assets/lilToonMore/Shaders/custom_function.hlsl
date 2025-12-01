@@ -1,5 +1,5 @@
 // Main4th
-void lilGetMain4th(inout lilFragData fd, inout float4 color4th, inout float main4thDissolveAlpha LIL_SAMP_IN_FUNC(samp))
+void lilGetMain4th(inout lilFragData fd, inout float4 color4th LIL_SAMP_IN_FUNC(samp))
 {
     color4th = _Color4th;
     if(_UseMain4thTex)
@@ -11,23 +11,6 @@ void lilGetMain4th(inout lilFragData fd, inout float4 color4th, inout float main
         if(_Main4thTex_UVMode == 4) uv4th = fd.uvMat;
         color4th *= LIL_GET_SUBTEX(_Main4thTex, uv4th);
         color4th.a *= LIL_SAMPLE_2D(_Main4thBlendMask, samp, fd.uvMain).r;
-        /*#define _Main4thDissolveMaskEnabled true
-        lilCalcDissolveWithNoise(
-            color4th.a,
-            main4thDissolveAlpha,
-            fd.uv0,
-            fd.positionOS,
-            _Main4thDissolveParams,
-            _Main4thDissolvePos,
-            _Main4thDissolveMask,
-            _Main4thDissolveMask_ST,
-            _Main4thDissolveMaskEnabled,
-            _Main4thDissolveNoiseMask,
-            _Main4thDissolveNoiseMask_ST,
-            _Main4thDissolveNoiseMask_ScrollRotate,
-            _Main4thDissolveNoiseStrength,
-            samp
-        );*/
         if(_AudioLink2Main4th) color4th.a *= fd.audioLinkValue;
         color4th.a = lerp(color4th.a, color4th.a * saturate((fd.depth - _Main4thDistanceFade.x) / (_Main4thDistanceFade.y - _Main4thDistanceFade.x)), _Main4thDistanceFade.z);
         if(_Main4thTex_Cull == 1 && fd.facing > 0 || _Main4thTex_Cull == 2 && fd.facing < 0) color4th.a = 0;
@@ -46,7 +29,7 @@ void lilGetMain4th(inout lilFragData fd, inout float4 color4th, inout float main
 }
 
 // Main5th
-void lilGetMain5th(inout lilFragData fd, inout float4 color5th, inout float main5thDissolveAlpha LIL_SAMP_IN_FUNC(samp))
+void lilGetMain5th(inout lilFragData fd, inout float4 color5th LIL_SAMP_IN_FUNC(samp))
 {
     color5th = _Color5th;
     if(_UseMain5thTex)
@@ -58,23 +41,6 @@ void lilGetMain5th(inout lilFragData fd, inout float4 color5th, inout float main
         if(_Main5thTex_UVMode == 4) uv5th = fd.uvMat;
         color5th *= LIL_GET_SUBTEX(_Main5thTex, uv5th);
         color5th.a *= LIL_SAMPLE_2D(_Main5thBlendMask, samp, fd.uvMain).r;
-        /*#define _Main5thDissolveMaskEnabled true
-        lilCalcDissolveWithNoise(
-            color5th.a,
-            main5thDissolveAlpha,
-            fd.uv0,
-            fd.positionOS,
-            _Main5thDissolveParams,
-            _Main5thDissolvePos,
-            _Main5thDissolveMask,
-            _Main5thDissolveMask_ST,
-            _Main5thDissolveMaskEnabled,
-            _Main5thDissolveNoiseMask,
-            _Main5thDissolveNoiseMask_ST,
-            _Main5thDissolveNoiseMask_ScrollRotate,
-            _Main5thDissolveNoiseStrength,
-            samp
-        );*/
         if(_AudioLink2Main5th) color5th.a *= fd.audioLinkValue;
         color5th.a = lerp(color5th.a, color5th.a * saturate((fd.depth - _Main5thDistanceFade.x) / (_Main5thDistanceFade.y - _Main5thDistanceFade.x)), _Main5thDistanceFade.z);
         if(_Main5thTex_Cull == 1 && fd.facing > 0 || _Main5thTex_Cull == 2 && fd.facing < 0) color5th.a = 0;
@@ -93,7 +59,7 @@ void lilGetMain5th(inout lilFragData fd, inout float4 color5th, inout float main
 }
 
 // Main6th
-void lilGetMain6th(inout lilFragData fd, inout float4 color6th, inout float main6thDissolveAlpha LIL_SAMP_IN_FUNC(samp))
+void lilGetMain6th(inout lilFragData fd, inout float4 color6th LIL_SAMP_IN_FUNC(samp))
 {
     color6th = _Color6th;
     if(_UseMain6thTex)
@@ -105,23 +71,6 @@ void lilGetMain6th(inout lilFragData fd, inout float4 color6th, inout float main
         if(_Main6thTex_UVMode == 4) uv6th = fd.uvMat;
         color6th *= LIL_GET_SUBTEX(_Main6thTex, uv6th);
         color6th.a *= LIL_SAMPLE_2D(_Main6thBlendMask, samp, fd.uvMain).r;
-        /*#define _Main6thDissolveMaskEnabled true
-        lilCalcDissolveWithNoise(
-            color6th.a,
-            main6thDissolveAlpha,
-            fd.uv0,
-            fd.positionOS,
-            _Main6thDissolveParams,
-            _Main6thDissolvePos,
-            _Main6thDissolveMask,
-            _Main6thDissolveMask_ST,
-            _Main6thDissolveMaskEnabled,
-            _Main6thDissolveNoiseMask,
-            _Main6thDissolveNoiseMask_ST,
-            _Main6thDissolveNoiseMask_ScrollRotate,
-            _Main6thDissolveNoiseStrength,
-            samp
-        );*/
         if(_AudioLink2Main6th) color6th.a *= fd.audioLinkValue;
         color6th.a = lerp(color6th.a, color6th.a * saturate((fd.depth - _Main6thDistanceFade.x) / (_Main6thDistanceFade.y - _Main6thDistanceFade.x)), _Main6thDistanceFade.z);
         if(_Main6thTex_Cull == 1 && fd.facing > 0 || _Main6thTex_Cull == 2 && fd.facing < 0) color6th.a = 0;

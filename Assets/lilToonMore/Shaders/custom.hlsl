@@ -24,12 +24,6 @@
     float4  _Main4thDistanceFade; \
     float4  _Main4thTexDecalAnimation; \
     float4  _Main4thTexDecalSubParam; \
-    float4  _Main4thDissolveMask_ST; \
-    float4  _Main4thDissolveColor; \
-    float4  _Main4thDissolveParams; \
-    float4  _Main4thDissolvePos; \
-    float4  _Main4thDissolveNoiseMask_ST; \
-    float4  _Main4thDissolveNoiseMask_ScrollRotate; \
     float   _Main4thTexAngle; \
     float   _Main4thEnableLighting; \
     float   _Main4thDissolveNoiseStrength; \
@@ -53,12 +47,6 @@
     float4  _Main5thDistanceFade; \
     float4  _Main5thTexDecalAnimation; \
     float4  _Main5thTexDecalSubParam; \
-    float4  _Main5thDissolveMask_ST; \
-    float4  _Main5thDissolveColor; \
-    float4  _Main5thDissolveParams; \
-    float4  _Main5thDissolvePos; \
-    float4  _Main5thDissolveNoiseMask_ST; \
-    float4  _Main5thDissolveNoiseMask_ScrollRotate; \
     float   _Main5thTexAngle; \
     float   _Main5thEnableLighting; \
     float   _Main5thDissolveNoiseStrength; \
@@ -82,12 +70,6 @@
     float4  _Main6thDistanceFade; \
     float4  _Main6thTexDecalAnimation; \
     float4  _Main6thTexDecalSubParam; \
-    float4  _Main6thDissolveMask_ST; \
-    float4  _Main6thDissolveColor; \
-    float4  _Main6thDissolveParams; \
-    float4  _Main6thDissolvePos; \
-    float4  _Main6thDissolveNoiseMask_ST; \
-    float4  _Main6thDissolveNoiseMask_ScrollRotate; \
     float   _Main6thTexAngle; \
     float   _Main6thEnableLighting; \
     float   _Main6thDissolveNoiseStrength; \
@@ -179,20 +161,14 @@
 #define LIL_CUSTOM_TEXTURES \
     Texture2D _Main4thTex; \
     Texture2D _Main4thBlendMask; \
-    Texture2D _Main4thDissolveMask; \
-    Texture2D _Main4thDissolveNoiseMask; \
     SamplerState sampler_Main4thTex; \
     
     Texture2D _Main5thTex; \
     Texture2D _Main5thBlendMask; \
-    Texture2D _Main5thDissolveMask; \
-    Texture2D _Main5thDissolveNoiseMask; \
     SamplerState sampler_Main5thTex; \
     
     Texture2D _Main6thTex; \
     Texture2D _Main6thBlendMask; \
-    Texture2D _Main6thDissolveMask; \
-    Texture2D _Main6thDissolveNoiseMask; \
     SamplerState sampler_Main6thTex; \
     
     Texture2D _Bump3rdMap; \

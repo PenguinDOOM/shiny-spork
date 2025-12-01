@@ -669,18 +669,6 @@ namespace lilToon
                             EditorGUI.indentLevel++;
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, main4thDistanceFade);
                             EditorGUI.indentLevel--;
-                                /*lilEditorGUI.DrawLine();
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, main4thDissolveParams);
-                                if(main4thDissolveParams.vectorValue.x == 1.0f)                                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMain4thDissolveMask, maskBlendContent, main4thDissolveMask);
-                                if(main4thDissolveParams.vectorValue.x == 2.0f && main4thDissolveParams.vectorValue.y == 0.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main4thDissolvePos, "sPosition|2");
-                                if(main4thDissolveParams.vectorValue.x == 2.0f && main4thDissolveParams.vectorValue.y == 1.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main4thDissolvePos, "sVector|2");
-                                if(main4thDissolveParams.vectorValue.x == 3.0f && main4thDissolveParams.vectorValue.y == 0.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main4thDissolvePos, "sPosition|3");
-                                if(main4thDissolveParams.vectorValue.x == 3.0f && main4thDissolveParams.vectorValue.y == 1.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main4thDissolvePos, "sVector|3");
-                                if(main4thDissolveParams.vectorValue.x != 0.0f)
-                                {
-                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMain4thDissolveNoiseMask, noiseMaskContent, main4thDissolveNoiseMask, main4thDissolveNoiseStrength, main4thDissolveNoiseMask_ScrollRotate);
-                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, main4thDissolveColor);
-                                }*/
                                 lilEditorGUI.DrawLine();
                                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, audioLink2Main4th);
                                 lilEditorGUI.DrawLine();
@@ -732,18 +720,6 @@ namespace lilToon
                             EditorGUI.indentLevel++;
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, main5thDistanceFade);
                             EditorGUI.indentLevel--;
-                            /*lilEditorGUI.DrawLine();
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, main5thDissolveParams);
-                                if(main5thDissolveParams.vectorValue.x == 1.0f)                                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMain5thDissolveMask, maskBlendContent, main5thDissolveMask);
-                                if(main5thDissolveParams.vectorValue.x == 2.0f && main5thDissolveParams.vectorValue.y == 0.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main5thDissolvePos, "sPosition|2");
-                                if(main5thDissolveParams.vectorValue.x == 2.0f && main5thDissolveParams.vectorValue.y == 1.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main5thDissolvePos, "sVector|2");
-                                if(main5thDissolveParams.vectorValue.x == 3.0f && main5thDissolveParams.vectorValue.y == 0.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main5thDissolvePos, "sPosition|3");
-                                if(main5thDissolveParams.vectorValue.x == 3.0f && main5thDissolveParams.vectorValue.y == 1.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main5thDissolvePos, "sVector|3");
-                                if(main5thDissolveParams.vectorValue.x != 0.0f)
-                                {
-                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMain5thDissolveNoiseMask, noiseMaskContent, main5thDissolveNoiseMask, main5thDissolveNoiseStrength, main5thDissolveNoiseMask_ScrollRotate);
-                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, main5thDissolveColor);
-                                }*/
                             lilEditorGUI.DrawLine();
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, audioLink2Main5th);
                             lilEditorGUI.DrawLine();
@@ -795,18 +771,6 @@ namespace lilToon
                             EditorGUI.indentLevel++;
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, main6thDistanceFade);
                             EditorGUI.indentLevel--;
-                            /*lilEditorGUI.DrawLine();
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, main6thDissolveParams);
-                                if(main6thDissolveParams.vectorValue.x == 1.0f)                                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMain6thDissolveMask, maskBlendContent, main6thDissolveMask);
-                                if(main6thDissolveParams.vectorValue.x == 2.0f && main6thDissolveParams.vectorValue.y == 0.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main6thDissolvePos, "sPosition|2");
-                                if(main6thDissolveParams.vectorValue.x == 2.0f && main6thDissolveParams.vectorValue.y == 1.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main6thDissolvePos, "sVector|2");
-                                if(main6thDissolveParams.vectorValue.x == 3.0f && main6thDissolveParams.vectorValue.y == 0.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main6thDissolvePos, "sPosition|3");
-                                if(main6thDissolveParams.vectorValue.x == 3.0f && main6thDissolveParams.vectorValue.y == 1.0f) lilEditorGUI.LocalizedProperty(m_MaterialEditor, main6thDissolvePos, "sVector|3");
-                                if(main6thDissolveParams.vectorValue.x != 0.0f)
-                                {
-                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMain6thDissolveNoiseMask, noiseMaskContent, main6thDissolveNoiseMask, main6thDissolveNoiseStrength, main6thDissolveNoiseMask_ScrollRotate);
-                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, main6thDissolveColor);
-                                }*/
                             lilEditorGUI.DrawLine();
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, audioLink2Main6th);
                             lilEditorGUI.DrawLine();
