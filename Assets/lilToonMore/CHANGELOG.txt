@@ -1,9 +1,15 @@
+2025/12/03
+Ver. 1.2.1
+Added Warp for each UV
+Optimized Warp
+Removed Dissolve codes completely (This time it's true)
+
 2025/12/02
 Ver. 1.2.0
 Added UV Warp
  Amplitude - The magnitude of the distortion
  Freq - Fineness of the waves
-Removed Dissolve codes completely
+Removed Dissolve codes completely <- This guy is lying
 
 2025/11/28
 Ver. 1.1.0
