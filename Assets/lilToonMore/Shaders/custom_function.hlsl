@@ -481,3 +481,39 @@ void lilEmission3rd(inout lilFragData fd LIL_SAMP_IN_FUNC(samp))
         fd.col.rgb = lilBlendColor(fd.col.rgb, emission3rdColor.rgb, emission3rdBlend, _Emission3rdBlendMode);
     }
 }
+
+float MoleCalc(float2 uv, float2 pos, float radius, float blur)
+{
+    float aspectFix = 1.0;
+    if(_MoleAspectFix) aspectFix = _MainTex_TexelSize.w / _MainTex_TexelSize.z;
+    float2 afuv = (uv - pos) * float2(aspectFix, 1);
+    float dist = length(afuv);
+    
+    return smoothstep(radius + blur, radius, dist);
+}
+
+// Mole
+void lilMoleDrower(inout lilFragData fd LIL_SAMP_IN_FUNC(samp))
+{
+    if(_UseMole)
+    {
+        float mole = 0;
+        float2 uv = fd.uvMain;
+        float4 moleColor = _MoleColor;
+        
+        if(_UseMole1st) mole += MoleCalc(uv, _Mole1stPos, _Mole1stRadius, _Mole1stBlur);
+        if(_UseMole2nd) mole += MoleCalc(uv, _Mole2ndPos, _Mole2ndRadius, _Mole2ndBlur);
+        if(_UseMole3rd) mole += MoleCalc(uv, _Mole3rdPos, _Mole3rdRadius, _Mole3rdBlur);
+        if(_UseMole4th) mole += MoleCalc(uv, _Mole4thPos, _Mole4thRadius, _Mole4thBlur);
+        if(_UseMole5th) mole += MoleCalc(uv, _Mole5thPos, _Mole5thRadius, _Mole5thBlur);
+        if(_UseMole6th) mole += MoleCalc(uv, _Mole6thPos, _Mole6thRadius, _Mole6thBlur);
+        if(_UseMole7th) mole += MoleCalc(uv, _Mole7thPos, _Mole7thRadius, _Mole7thBlur);
+        if(_UseMole8th) mole += MoleCalc(uv, _Mole8thPos, _Mole8thRadius, _Mole8thBlur);
+        if(_UseMole9th) mole += MoleCalc(uv, _Mole9thPos, _Mole9thRadius, _Mole9thBlur);
+        if(_UseMole10th) mole += MoleCalc(uv, _Mole10thPos, _Mole10thRadius, _Mole10thBlur);
+
+        mole = saturate(mole);
+        
+        fd.col.rgb = lilBlendColor(fd.col.rgb, moleColor.rgb, mole * moleColor.a, _MoleBlendMode);
+    }
+}

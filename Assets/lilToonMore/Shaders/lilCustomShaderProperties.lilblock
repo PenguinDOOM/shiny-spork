@@ -199,3 +199,50 @@
                         _Emission3rdFluorescence    ("sFluorescence", Range(0,1)) = 0
         [lilToggle]     _AudioLink2Emission3rd      ("Use AudioLink", Int) = 0
         
+        //----------------------------------------------------------------------------------------------------------------------
+        // Mole
+        [lilToggleLeft] _UseMole             ("Mole Drawer", Int) = 0
+        [lilHDR]        _MoleColor           ("sColor", Color) = (0,0,0,1)
+        [lilEnum]       _MoleBlendMode       ("sBlendModes", Int) = 0
+        [lilToggle]     _MoleAspectFix       ("Mole Aspect Fix", Int) = 0
+        [lilToggleLeft] _UseMole1st          ("Mole 1st", Int) = 0
+        [lilVec2]       _Mole1stPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole1stRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole1stBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole2nd          ("Mole 2st", Int) = 0
+        [lilVec2]       _Mole2ndPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole2ndRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole2ndBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole3rd          ("Mole 3rd", Int) = 0
+        [lilVec2]       _Mole3rdPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole3rdRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole3rdBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole4th          ("Mole 4th", Int) = 0
+        [lilVec2]       _Mole4thPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole4thRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole4thBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole5th          ("Mole 5th", Int) = 0
+        [lilVec2]       _Mole5thPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole5thRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole5thBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole6th          ("Mole 6th", Int) = 0
+        [lilVec2]       _Mole6thPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole6thRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole6thBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole7th          ("Mole 7th", Int) = 0
+        [lilVec2]       _Mole7thPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole7thRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole7thBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole8th          ("Mole 8th", Int) = 0
+        [lilVec2]       _Mole8thPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole8thRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole8thBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole9th          ("Mole 9th", Int) = 0
+        [lilVec2]       _Mole9thPos          ("UV Position", Vector) = (0,0,0,0)
+                        _Mole9thRadius       ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole9thBlur         ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        [lilToggleLeft] _UseMole10th         ("Mole 10th", Int) = 0
+        [lilVec2]       _Mole10thPos         ("UV Position", Vector) = (0,0,0,0)
+                        _Mole10thRadius      ("Mole Radius", Range(0, 0.01)) = 0
+                        _Mole10thBlur        ("Mole Blur", Range(0.0001, 0.005)) = 0.0002
+        

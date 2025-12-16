@@ -86,7 +86,8 @@
         lilGetMain3rdMore(fd, color3rd, main3rdDissolveAlpha LIL_SAMP_IN(sampler_MainTex)); \
         lilGetMain4th(fd, color4th LIL_SAMP_IN(sampler_MainTex)); \
         lilGetMain5th(fd, color5th LIL_SAMP_IN(sampler_MainTex)); \
-        lilGetMain6th(fd, color6th LIL_SAMP_IN(sampler_MainTex));
+        lilGetMain6th(fd, color6th LIL_SAMP_IN(sampler_MainTex)); \
+        lilMoleDrower(fd LIL_SAMP_IN(sampler_MainTex));
 #endif
 
 #if !defined(LIL_OUTLINE)

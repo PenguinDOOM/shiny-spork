@@ -194,6 +194,53 @@
     bool    _UseEmission3rd; \
     bool    _AudioLink2Emission3rd; \
     
+    float4  _MainTex_TexelSize; \
+    float4  _MoleColor; \
+    float2  _Mole1stPos; \
+    float2  _Mole2ndPos; \
+    float2  _Mole3rdPos; \
+    float2  _Mole4thPos; \
+    float2  _Mole5thPos; \
+    float2  _Mole6thPos; \
+    float2  _Mole7thPos; \
+    float2  _Mole8thPos; \
+    float2  _Mole9thPos; \
+    float2  _Mole10thPos; \
+    float   _Mole1stRadius; \
+    float   _Mole2ndRadius; \
+    float   _Mole3rdRadius; \
+    float   _Mole4thRadius; \
+    float   _Mole5thRadius; \
+    float   _Mole6thRadius; \
+    float   _Mole7thRadius; \
+    float   _Mole8thRadius; \
+    float   _Mole9thRadius; \
+    float   _Mole10thRadius; \
+    float   _Mole1stBlur; \
+    float   _Mole2ndBlur; \
+    float   _Mole3rdBlur; \
+    float   _Mole4thBlur; \
+    float   _Mole5thBlur; \
+    float   _Mole6thBlur; \
+    float   _Mole7thBlur; \
+    float   _Mole8thBlur; \
+    float   _Mole9thBlur; \
+    float   _Mole10thBlur; \
+    uint    _MoleBlendMode; \
+    bool    _MoleAspectFix; \
+    bool    _UseMole; \
+    bool    _UseMole1st; \
+    bool    _UseMole2nd; \
+    bool    _UseMole3rd; \
+    bool    _UseMole4th; \
+    bool    _UseMole5th; \
+    bool    _UseMole6th; \
+    bool    _UseMole7th; \
+    bool    _UseMole8th; \
+    bool    _UseMole9th; \
+    bool    _UseMole10th;
+
+
 
 // Custom textures
 #define LIL_CUSTOM_TEXTURES \

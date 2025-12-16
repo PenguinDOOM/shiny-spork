@@ -219,6 +219,54 @@ namespace lilToon
             "_AudioLink2Emission3rd"
         };
         
+        readonly string[] moleCategory = new string[]
+        {
+            "_UseMole",
+            "_MoleColor",
+            "_MoleBlendMode",
+            "_MoleAspectFix",
+            "_UseMole1st",
+            "_Mole1stPos",
+            "_Mole1stRadius",
+            "_Mole1stBlur",
+            "_UseMole2nd",
+            "_Mole2ndPos",
+            "_Mole2ndRadius",
+            "_Mole2ndBlur",
+            "_UseMole3rd",
+            "_Mole3rdPos",
+            "_Mole3rdRadius",
+            "_Mole3rdBlur",
+            "_UseMole4th",
+            "_Mole4thPos",
+            "_Mole4thRadius",
+            "_Mole4thBlur",
+            "_UseMole5th",
+            "_Mole5thPos",
+            "_Mole5thRadius",
+            "_Mole5thBlur",
+            "_UseMole6th",
+            "_Mole6thPos",
+            "_Mole6thRadius",
+            "_Mole6thBlur",
+            "_UseMole7th",
+            "_Mole7thPos",
+            "_Mole7thRadius",
+            "_Mole7thBlur",
+            "_UseMole8th",
+            "_Mole8thPos",
+            "_Mole8thRadius",
+            "_Mole8thBlur",
+            "_UseMole9th",
+            "_Mole9thPos",
+            "_Mole9thRadius",
+            "_Mole9thBlur",
+            "_UseMole10th",
+            "_Mole10thPos",
+            "_Mole10thRadius",
+            "_Mole10thBlur"
+        };
+        
 
         private MaterialProperty useMain4thTex;
         private MaterialProperty color4th;
@@ -397,6 +445,51 @@ namespace lilToon
         private MaterialProperty emission3rdParallaxDepth;
         private MaterialProperty emission3rdFluorescence;
         private MaterialProperty audioLink2Emission3rd;
+
+        private MaterialProperty useMole;
+        private MaterialProperty moleColor;
+        private MaterialProperty moleBlendMode;
+        private MaterialProperty moleAspectFix;
+        private MaterialProperty useMole1st;
+        private MaterialProperty mole1stPos;
+        private MaterialProperty mole1stRadius;
+        private MaterialProperty mole1stBlur;
+        private MaterialProperty useMole2nd;
+        private MaterialProperty mole2ndPos;
+        private MaterialProperty mole2ndRadius;
+        private MaterialProperty mole2ndBlur;
+        private MaterialProperty useMole3rd;
+        private MaterialProperty mole3rdPos;
+        private MaterialProperty mole3rdRadius;
+        private MaterialProperty mole3rdBlur;
+        private MaterialProperty useMole4th;
+        private MaterialProperty mole4thPos;
+        private MaterialProperty mole4thRadius;
+        private MaterialProperty mole4thBlur;
+        private MaterialProperty useMole5th;
+        private MaterialProperty mole5thPos;
+        private MaterialProperty mole5thRadius;
+        private MaterialProperty mole5thBlur;
+        private MaterialProperty useMole6th;
+        private MaterialProperty mole6thPos;
+        private MaterialProperty mole6thRadius;
+        private MaterialProperty mole6thBlur;
+        private MaterialProperty useMole7th;
+        private MaterialProperty mole7thPos;
+        private MaterialProperty mole7thRadius;
+        private MaterialProperty mole7thBlur;
+        private MaterialProperty useMole8th;
+        private MaterialProperty mole8thPos;
+        private MaterialProperty mole8thRadius;
+        private MaterialProperty mole8thBlur;
+        private MaterialProperty useMole9th;
+        private MaterialProperty mole9thPos;
+        private MaterialProperty mole9thRadius;
+        private MaterialProperty mole9thBlur;
+        private MaterialProperty useMole10th;
+        private MaterialProperty mole10thPos;
+        private MaterialProperty mole10thRadius;
+        private MaterialProperty mole10thBlur;
 
         
         // ▼ コピー／ペースト用バッファ
@@ -748,6 +841,51 @@ namespace lilToon
             emission3rdParallaxDepth = FindProperty("_Emission3rdParallaxDepth", props);
             emission3rdFluorescence = FindProperty("_Emission3rdFluorescence", props);
             audioLink2Emission3rd = FindProperty("_AudioLink2Emission3rd", props);
+
+            useMole = FindProperty("_UseMole", props);
+            moleColor = FindProperty("_MoleColor", props);
+            moleBlendMode = FindProperty("_MoleBlendMode", props);
+            moleAspectFix = FindProperty("_MoleAspectFix", props);
+            useMole1st = FindProperty("_UseMole1st", props);
+            mole1stPos = FindProperty("_Mole1stPos", props);
+            mole1stRadius = FindProperty("_Mole1stRadius", props);
+            mole1stBlur = FindProperty("_Mole1stBlur", props);
+            useMole2nd = FindProperty("_UseMole2nd", props);
+            mole2ndPos = FindProperty("_Mole2ndPos", props);
+            mole2ndRadius = FindProperty("_Mole2ndRadius", props);
+            mole2ndBlur = FindProperty("_Mole2ndBlur", props);
+            useMole3rd = FindProperty("_UseMole3rd", props);
+            mole3rdPos = FindProperty("_Mole3rdPos", props);
+            mole3rdRadius = FindProperty("_Mole3rdRadius", props);
+            mole3rdBlur = FindProperty("_Mole3rdBlur", props);
+            useMole4th = FindProperty("_UseMole4th", props);
+            mole4thPos = FindProperty("_Mole4thPos", props);
+            mole4thRadius = FindProperty("_Mole4thRadius", props);
+            mole4thBlur = FindProperty("_Mole4thBlur", props);
+            useMole5th = FindProperty("_UseMole5th", props);
+            mole5thPos = FindProperty("_Mole5thPos", props);
+            mole5thRadius = FindProperty("_Mole5thRadius", props);
+            mole5thBlur = FindProperty("_Mole5thBlur", props);
+            useMole6th = FindProperty("_UseMole6th", props);
+            mole6thPos = FindProperty("_Mole6thPos", props);
+            mole6thRadius = FindProperty("_Mole6thRadius", props);
+            mole6thBlur = FindProperty("_Mole6thBlur", props);
+            useMole7th = FindProperty("_UseMole7th", props);
+            mole7thPos = FindProperty("_Mole7thPos", props);
+            mole7thRadius = FindProperty("_Mole7thRadius", props);
+            mole7thBlur = FindProperty("_Mole7thBlur", props);
+            useMole8th = FindProperty("_UseMole8th", props);
+            mole8thPos = FindProperty("_Mole8thPos", props);
+            mole8thRadius = FindProperty("_Mole8thRadius", props);
+            mole8thBlur = FindProperty("_Mole8thBlur", props);
+            useMole9th = FindProperty("_UseMole9th", props);
+            mole9thPos = FindProperty("_Mole9thPos", props);
+            mole9thRadius = FindProperty("_Mole9thRadius", props);
+            mole9thBlur = FindProperty("_Mole9thBlur", props);
+            useMole10th = FindProperty("_UseMole10th", props);
+            mole10thPos = FindProperty("_Mole10thPos", props);
+            mole10thRadius = FindProperty("_Mole10thRadius", props);
+            mole10thBlur = FindProperty("_Mole10thBlur", props);
             
         }
 
@@ -1243,7 +1381,210 @@ namespace lilToon
                                     ResetCategory(warpCategory, material);
                                 }
                             }
-                        lilEditorGUI.DrawLine();
+                        EditorGUILayout.EndVertical();
+                    }
+                EditorGUILayout.EndVertical();
+                
+                EditorGUILayout.BeginVertical(boxOuter);
+                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole, false);
+                    if(useMole.floatValue == 1)
+                    {
+                        EditorGUILayout.BeginVertical(boxInnerHalf);
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, moleColor);
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, moleBlendMode);
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, moleAspectFix);
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole1st);
+                                if(useMole1st.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _1stPos = new Vector2(mole1stPos.vectorValue.x, mole1stPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _1stPos.x = lilEditorGUI.Slider(mole1stPos.displayName + " X", _1stPos.x, 0, 1);
+                                        _1stPos.y = lilEditorGUI.Slider(mole1stPos.displayName + " Y", _1stPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole1stRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole1stBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole1stPos.vectorValue = _1stPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole2nd);
+                                if(useMole2nd.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _2ndPos = new Vector2(mole2ndPos.vectorValue.x, mole2ndPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _2ndPos.x = lilEditorGUI.Slider(mole2ndPos.displayName + " X", _2ndPos.x, 0, 1);
+                                        _2ndPos.y = lilEditorGUI.Slider(mole2ndPos.displayName + " Y", _2ndPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole2ndRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole2ndBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole2ndPos.vectorValue = _2ndPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole3rd);
+                                if(useMole3rd.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _3rdPos = new Vector2(mole3rdPos.vectorValue.x, mole3rdPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _3rdPos.x = lilEditorGUI.Slider(mole3rdPos.displayName + " X", _3rdPos.x, 0, 1);
+                                        _3rdPos.y = lilEditorGUI.Slider(mole3rdPos.displayName + " Y", _3rdPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole3rdRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole3rdBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole3rdPos.vectorValue = _3rdPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole4th);
+                                if(useMole4th.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _4thPos = new Vector2(mole4thPos.vectorValue.x, mole4thPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _4thPos.x = lilEditorGUI.Slider(mole4thPos.displayName + " X", _4thPos.x, 0, 1);
+                                        _4thPos.y = lilEditorGUI.Slider(mole4thPos.displayName + " Y", _4thPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole4thRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole4thBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole4thPos.vectorValue = _4thPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole5th);
+                                if(useMole5th.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _5thPos = new Vector2(mole5thPos.vectorValue.x, mole5thPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _5thPos.x = lilEditorGUI.Slider(mole5thPos.displayName + " X", _5thPos.x, 0, 1);
+                                        _5thPos.y = lilEditorGUI.Slider(mole5thPos.displayName + " Y", _5thPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole5thRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole5thBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole5thPos.vectorValue = _5thPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole6th);
+                                if(useMole6th.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _6thPos = new Vector2(mole6thPos.vectorValue.x, mole6thPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _6thPos.x = lilEditorGUI.Slider(mole6thPos.displayName + " X", _6thPos.x, 0, 1);
+                                        _6thPos.y = lilEditorGUI.Slider(mole6thPos.displayName + " Y", _6thPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole6thRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole6thBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole6thPos.vectorValue = _6thPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole7th);
+                                if(useMole7th.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _7thPos = new Vector2(mole7thPos.vectorValue.x, mole7thPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _7thPos.x = lilEditorGUI.Slider(mole7thPos.displayName + " X", _7thPos.x, 0, 1);
+                                        _7thPos.y = lilEditorGUI.Slider(mole7thPos.displayName + " Y", _7thPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole7thRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole7thBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole7thPos.vectorValue = _7thPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole8th);
+                                if(useMole8th.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _8thPos = new Vector2(mole8thPos.vectorValue.x, mole8thPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _8thPos.x = lilEditorGUI.Slider(mole8thPos.displayName + " X", _8thPos.x, 0, 1);
+                                        _8thPos.y = lilEditorGUI.Slider(mole8thPos.displayName + " Y", _8thPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole8thRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole8thBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole8thPos.vectorValue = _8thPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole9th);
+                                if(useMole9th.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _9thPos = new Vector2(mole9thPos.vectorValue.x, mole9thPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _9thPos.x = lilEditorGUI.Slider(mole9thPos.displayName + " X", _9thPos.x, 0, 1);
+                                        _9thPos.y = lilEditorGUI.Slider(mole9thPos.displayName + " Y", _9thPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole9thRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole9thBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole9thPos.vectorValue = _9thPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole10th);
+                                if(useMole10th.floatValue == 1)
+                                {
+                                    EditorGUI.indentLevel++;
+                                        Vector2 _10thPos = new Vector2(mole10thPos.vectorValue.x, mole10thPos.vectorValue.y);
+                                    EditorGUI.BeginChangeCheck();
+                                        _10thPos.x = lilEditorGUI.Slider(mole10thPos.displayName + " X", _10thPos.x, 0, 1);
+                                        _10thPos.y = lilEditorGUI.Slider(mole10thPos.displayName + " Y", _10thPos.y, 0, 1);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole10thRadius);
+                                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, mole10thBlur);
+                                    if(EditorGUI.EndChangeCheck())
+                                    {
+                                        mole10thPos.vectorValue = _10thPos;
+                                    }
+                                    EditorGUI.indentLevel--;
+                                }
+                            lilEditorGUI.DrawLine();
+                                if (GUILayout.Button("Copy Mole"))
+                                {
+                                    CopyCategory(moleCategory, material);
+                                }
+                            lilEditorGUI.DrawLine();
+                                if (GUILayout.Button("Paste Mole"))
+                                {
+                                    PasteCategory(moleCategory, material);
+                                }
+                            lilEditorGUI.DrawLine();
+                                if (GUILayout.Button("Reset Mole"))
+                                {
+                                    if (EditorUtility.DisplayDialog(
+                                        "Reset Confirmation",
+                                        "Mole will be reset to their default values. \nAre you sure?",
+                                        "Reset",
+                                        "Cancel"))
+                                    {
+                                        ResetCategory(moleCategory, material);
+                                    }
+                                }
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
