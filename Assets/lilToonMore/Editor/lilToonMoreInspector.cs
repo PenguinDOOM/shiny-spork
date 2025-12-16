@@ -1042,61 +1042,61 @@ namespace lilToon
                     }
                 EditorGUILayout.EndVertical();
                 
-                EditorGUILayout.BeginVertical(boxOuter);
-                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMatCap4th, false);
-                    if(useMatCap4th.floatValue == 1)
-                    {
-                        EditorGUILayout.BeginVertical(boxInnerHalf);
-                                lilEditorGUI.MatCapTextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap4thUV, matcapContent, matCap4thTex, matCap4thColor, matCap4thBlendUV1, matCap4thZRotCancel, matCap4thPerspective, matCap4thVRParallaxStrength);
-                                lilEditorGUI.LocalizedPropertyAlpha(matCap4thColor);
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thMainStrength);
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thNormalStrength);
-                            lilEditorGUI.DrawLine();
-                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap4thBlendMask, maskBlendRGBContent, matCap4thBlendMask, matCap4thBlend);
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thEnableLighting);
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thShadowMask);
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thBackfaceMask);
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thLod);
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thBlendMode);
-                                if(matCap4thEnableLighting.floatValue != 0.0f && matCap4thBlendMode.floatValue == 3.0f && lilEditorGUI.AutoFixHelpBox(GetLoc("sHelpMatCap4thBlending")))
-                                {
-                                    matCap4thEnableLighting.floatValue = 0.0f;
-                                }
-                                if(isTransparent) lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thApplyTransparency);
-                            lilEditorGUI.DrawLine();
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thCustomNormal);
-                                if(matCap4thCustomNormal.floatValue == 1)
-                                {
-                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap4thBumpMap, normalMapContent, matCap4thBumpMap, matCap4thBumpScale);
-                                }
-                            lilEditorGUI.DrawLine();
-                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, anisotropy2MatCap4th);
-                            lilEditorGUI.DrawLine();
-                                if (GUILayout.Button("Copy MatCap 4th"))
-                                {
-                                    CopyCategory(matCap4thCategory, material);
-                                }
-                            lilEditorGUI.DrawLine();
-                                if (GUILayout.Button("Paste MatCap 4th"))
-                                {
-                                    PasteCategory(matCap4thCategory, material);
-                                }
-                            lilEditorGUI.DrawLine();
-                                if (GUILayout.Button("Reset MatCap 4th"))
-                                {
-                                    if (EditorUtility.DisplayDialog(
-                                        "Reset Confirmation",
-                                        "MatCap 4th will be reset to their default values. \nAre you sure?",
-                                        "Reset",
-                                        "Cancel"))
+                if(renderingModeBuf != RenderingMode.Opaque)
+                {
+                    GUILayout.Label(GetLoc("When using MatCap4th, the rendering mode must be opaque"), wrapLabel);
+                }
+                else
+                {
+                    EditorGUILayout.BeginVertical(boxOuter);
+                        lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMatCap4th, false);
+                        if(useMatCap4th.floatValue == 1)
+                        {
+                            EditorGUILayout.BeginVertical(boxInnerHalf);
+                                    lilEditorGUI.MatCapTextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap4thUV, matcapContent, matCap4thTex, matCap4thColor, matCap4thBlendUV1, matCap4thZRotCancel, matCap4thPerspective, matCap4thVRParallaxStrength);
+                                    lilEditorGUI.LocalizedPropertyAlpha(matCap4thColor);
+                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thMainStrength);
+                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thNormalStrength);
+                                lilEditorGUI.DrawLine();
+                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap4thBlendMask, maskBlendRGBContent, matCap4thBlendMask, matCap4thBlend);
+                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thEnableLighting);
+                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thShadowMask);
+                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thBackfaceMask);
+                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thLod);
+                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thBlendMode);
+                                    if(matCap4thEnableLighting.floatValue != 0.0f && matCap4thBlendMode.floatValue == 3.0f && lilEditorGUI.AutoFixHelpBox(GetLoc("sHelpMatCap4thBlending")))
                                     {
-                                        ResetCategory(matCap4thCategory, material);
+                                        matCap4thEnableLighting.floatValue = 0.0f;
                                     }
-                                }
-                            lilEditorGUI.DrawLine();
-                        EditorGUILayout.EndVertical();
-                    }
-                EditorGUILayout.EndVertical();
+                                    if(isTransparent) lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thApplyTransparency);
+                                lilEditorGUI.DrawLine();
+                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, anisotropy2MatCap4th);
+                                lilEditorGUI.DrawLine();
+                                    if (GUILayout.Button("Copy MatCap 4th"))
+                                    {
+                                        CopyCategory(matCap4thCategory, material);
+                                    }
+                                lilEditorGUI.DrawLine();
+                                    if (GUILayout.Button("Paste MatCap 4th"))
+                                    {
+                                        PasteCategory(matCap4thCategory, material);
+                                    }
+                                lilEditorGUI.DrawLine();
+                                    if (GUILayout.Button("Reset MatCap 4th"))
+                                    {
+                                        if (EditorUtility.DisplayDialog(
+                                            "Reset Confirmation",
+                                            "MatCap 4th will be reset to their default values. \nAre you sure?",
+                                            "Reset",
+                                            "Cancel"))
+                                        {
+                                            ResetCategory(matCap4thCategory, material);
+                                        }
+                                    }
+                            EditorGUILayout.EndVertical();
+                        }
+                    EditorGUILayout.EndVertical();
+                }
                 
                 EditorGUILayout.BeginVertical(boxOuter);
                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, useGlitter2nd);
