@@ -40,8 +40,8 @@ public class CopyLilblockPropsWindow : EditorWindow
         string projectRoot = Directory.GetParent(Application.dataPath).FullName;
         string filePath = Path.Combine(
             projectRoot,
-            "Assets",
-            "lilToonMore",
+            "Packages",
+            "jp.penguin.liltoonmore",
             "Shaders",
             "lilCustomShaderProperties.lilblock"
         );
