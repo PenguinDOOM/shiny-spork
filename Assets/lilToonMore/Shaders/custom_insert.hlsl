@@ -127,3 +127,9 @@
         lilGlitter(fd LIL_SAMP_IN(sampler_MainTex)); \
         lilGlitter2nd(fd LIL_SAMP_IN(sampler_MainTex));
 #endif
+
+#if !defined(OVERRIDE_EMISSION_2ND)
+    #define OVERRIDE_EMISSION_2ND \
+        lilEmission2nd(fd LIL_SAMP_IN(sampler_MainTex)); \
+        lilEmission3rd(fd LIL_SAMP_IN(sampler_MainTex));
+#endif

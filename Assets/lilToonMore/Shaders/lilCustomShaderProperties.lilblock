@@ -187,3 +187,21 @@
         [lilToggle]     _UseWarpMain5th                             ("Main Color 5th Warping", Int) = 0
         [lilToggle]     _UseWarpMain6th                             ("Main Color 6th Warping", Int) = 0
         [lilToggle]     _WarpReplaceRefract                         ("Warp Replace Refract", Int) = 0
+
+        //----------------------------------------------------------------------------------------------------------------------
+        // Emmision3rd
+        [lilToggleLeft] _UseEmission3rd             ("Emission 3rd", Int) = 0
+        [HDR][lilHDR]   _Emission3rdColor           ("sColor", Color) = (1,1,1,1)
+                        _Emission3rdMap             ("Texture", 2D) = "white" {}
+        [lilUVAnim]     _Emission3rdMap_ScrollRotate ("sScrollRotates", Vector) = (0,0,0,0)
+        [lilEnum]       _Emission3rdMap_UVMode      ("UV Mode|UV0|UV1|UV2|UV3|Rim", Int) = 0
+                        _Emission3rdMainStrength    ("sMainColorPower", Range(0, 1)) = 0
+                        _Emission3rdBlend           ("Blend", Range(0,1)) = 1
+                        _Emission3rdBlendMask       ("Mask", 2D) = "white" {}
+        [lilUVAnim]     _Emission3rdBlendMask_ScrollRotate ("sScrollRotates", Vector) = (0,0,0,0)
+        [lilEnum]       _Emission3rdBlendMode       ("sBlendModes", Int) = 1
+        [lilBlink]      _Emission3rdBlink           ("sBlinkSettings", Vector) = (0,0,3.141593,0)
+                        _Emission3rdParallaxDepth   ("sParallaxDepth", float) = 0
+                        _Emission3rdFluorescence    ("sFluorescence", Range(0,1)) = 0
+        [lilToggle]     _AudioLink2Emission3rd      ("Use AudioLink", Int) = 0
+        

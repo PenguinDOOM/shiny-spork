@@ -456,3 +456,42 @@ void lilGlitter2nd(inout lilFragData fd LIL_SAMP_IN_FUNC(samp))
         #endif
     }
 }
+
+// Emission3rd
+void lilEmission3rd(inout lilFragData fd LIL_SAMP_IN_FUNC(samp))
+{
+    if(_UseEmission3rd)
+    {
+        float4 emission3rdColor = _Emission3rdColor;
+        // UV
+        float2 emission3rdUV = fd.uv0;
+        if(_Emission3rdMap_UVMode == 1) emission3rdUV = fd.uv1;
+        if(_Emission3rdMap_UVMode == 2) emission3rdUV = fd.uv2;
+        if(_Emission3rdMap_UVMode == 3) emission3rdUV = fd.uv3;
+        if(_Emission3rdMap_UVMode == 4) emission3rdUV = fd.uvRim;
+        //if(_Emission3rdMap_UVMode == 4) emission3rdUV = fd.uvPanorama;
+        float2 _Emission3rdMapParaTex = emission3rdUV + _Emission3rdParallaxDepth * fd.parallaxOffset;
+        // Texture
+        #if defined(LIL_FEATURE_ANIMATE_EMISSION_UV)
+            emission3rdColor *= LIL_GET_EMITEX(_Emission3rdMap, _Emission3rdMapParaTex);
+        #else
+            emission3rdColor *= LIL_SAMPLE_2D_ST(_Emission3rdMap, sampler_Emission3rdMap, _Emission3rdMapParaTex);
+        #endif
+        // Mask
+        #if defined(LIL_FEATURE_ANIMATE_EMISSION_MASK_UV)
+            emission3rdColor *= LIL_GET_EMIMASK(_Emission3rdBlendMask, fd.uv0);
+        #else
+            emission3rdColor *= LIL_SAMPLE_2D_ST(_Emission3rdBlendMask, samp, fd.uvMain);
+        #endif
+        #if defined(LIL_FEATURE_AUDIOLINK)
+            if(_AudioLink2Emission3rd) emission3rdColor.a *= fd.audioLinkValue;
+        #endif
+        emission3rdColor.rgb = lerp(emission3rdColor.rgb, emission3rdColor.rgb * fd.invLighting, _Emission3rdFluorescence);
+        emission3rdColor.rgb = lerp(emission3rdColor.rgb, emission3rdColor.rgb * fd.albedo, _Emission3rdMainStrength);
+        float emission3rdBlend = _Emission3rdBlend * lilCalcBlink(_Emission3rdBlink) * emission3rdColor.a;
+        #if LIL_RENDER == 2 && !defined(LIL_REFRACTION)
+            emission3rdBlend *= fd.col.a;
+        #endif
+        fd.col.rgb = lilBlendColor(fd.col.rgb, emission3rdColor.rgb, emission3rdBlend, _Emission3rdBlendMode);
+    }
+}

@@ -183,7 +183,23 @@
     bool    _UseWarpMain4th; \
     bool    _UseWarpMain5th; \
     bool    _UseWarpMain6th; \
-    bool    _WarpReplaceRefract;
+    bool    _WarpReplaceRefract;\
+
+    float4  _Emission3rdColor; \
+    float4  _Emission3rdMap_ST; \
+    float4  _Emission3rdMap_ScrollRotate; \
+    float4  _Emission3rdBlendMask_ST; \
+    float4  _Emission3rdBlendMask_ScrollRotate; \
+    float4  _Emission3rdBlink; \
+    float   _Emission3rdMainStrength; \
+    float   _Emission3rdBlend; \
+    float   _Emission3rdParallaxDepth; \
+    float   _Emission3rdFluorescence; \
+    uint    _Emission3rdMap_UVMode; \
+    uint    _Emission3rdBlendMode; \
+    bool    _UseEmission3rd; \
+    bool    _AudioLink2Emission3rd; \
+    
 
 // Custom textures
 #define LIL_CUSTOM_TEXTURES \
@@ -211,7 +227,11 @@
     Texture2D _MatCap4thBumpMap; \
     
     Texture2D _Glitter2ndColorTex; \
-    Texture2D _Glitter2ndShapeTex;
+    Texture2D _Glitter2ndShapeTex; \
+    
+    Texture2D _Emission3rdMap; \
+    Texture2D _Emission3rdBlendMask; \
+    SamplerState sampler_Emission3rdMap;
     
     
 

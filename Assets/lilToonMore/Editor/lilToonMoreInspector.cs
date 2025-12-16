@@ -206,6 +206,25 @@ namespace lilToon
             "_UseWarpMain6th",
             "_WarpReplaceRefract",
         };
+        
+        readonly string[] emission3rdCategory = new string[]
+        {
+            "_UseEmission3rd",
+            "_Emission3rdColor",
+            "_Emission3rdMap",
+            "_Emission3rdMap_ScrollRotate",
+            "_Emission3rdMap_UVMode",
+            "_Emission3rdMainStrength",
+            "_Emission3rdBlend",
+            "_Emission3rdBlendMask",
+            "_Emission3rdBlendMask_ScrollRotate",
+            "_Emission3rdBlendMode",
+            "_Emission3rdBlink",
+            "_Emission3rdParallaxDepth",
+            "_Emission3rdFluorescence",
+            "_AudioLink2Emission3rd"
+        };
+        
 
         private MaterialProperty useMain4thTex;
         private MaterialProperty color4th;
@@ -375,6 +394,21 @@ namespace lilToon
         private MaterialProperty useWarpMain5th;
         private MaterialProperty useWarpMain6th;
         private MaterialProperty warpReplaceRefract;
+
+        private MaterialProperty useEmission3rd;
+        private MaterialProperty emission3rdColor;
+        private MaterialProperty emission3rdMap;
+        private MaterialProperty emission3rdMap_ScrollRotate;
+        private MaterialProperty emission3rdMap_UVMode;
+        private MaterialProperty emission3rdMainStrength;
+        private MaterialProperty emission3rdBlend;
+        private MaterialProperty emission3rdBlendMask;
+        private MaterialProperty emission3rdBlendMask_ScrollRotate;
+        private MaterialProperty emission3rdBlendMode;
+        private MaterialProperty emission3rdBlink;
+        private MaterialProperty emission3rdParallaxDepth;
+        private MaterialProperty emission3rdFluorescence;
+        private MaterialProperty audioLink2Emission3rd;
 
         
         // ▼ コピー／ペースト用バッファ
@@ -717,6 +751,21 @@ namespace lilToon
             useWarpMain5th = FindProperty("_UseWarpMain5th", props);
             useWarpMain6th = FindProperty("_UseWarpMain6th", props);
             warpReplaceRefract = FindProperty("_WarpReplaceRefract", props);
+
+            useEmission3rd = FindProperty("_UseEmission3rd", props);
+            emission3rdColor = FindProperty("_Emission3rdColor", props);
+            emission3rdMap = FindProperty("_Emission3rdMap", props);
+            emission3rdMap_ScrollRotate = FindProperty("_Emission3rdMap_ScrollRotate", props);
+            emission3rdMap_UVMode = FindProperty("_Emission3rdMap_UVMode", props);
+            emission3rdMainStrength = FindProperty("_Emission3rdMainStrength", props);
+            emission3rdBlend = FindProperty("_Emission3rdBlend", props);
+            emission3rdBlendMask = FindProperty("_Emission3rdBlendMask", props);
+            emission3rdBlendMask_ScrollRotate = FindProperty("_Emission3rdBlendMask_ScrollRotate", props);
+            emission3rdBlendMode = FindProperty("_Emission3rdBlendMode", props);
+            emission3rdBlink = FindProperty("_Emission3rdBlink", props);
+            emission3rdParallaxDepth = FindProperty("_Emission3rdParallaxDepth", props);
+            emission3rdFluorescence = FindProperty("_Emission3rdFluorescence", props);
+            audioLink2Emission3rd = FindProperty("_AudioLink2Emission3rd", props);
             
         }
 
@@ -883,6 +932,47 @@ namespace lilToon
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
+                
+                EditorGUILayout.BeginVertical(boxOuter);
+                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, useEmission3rd, false);
+                    if(useEmission3rd.floatValue == 1)
+                    {
+                        EditorGUILayout.BeginVertical(boxInnerHalf);
+                            lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowEmission3rdMap, colorMaskRGBAContent, emission3rdMap, emission3rdColor, emission3rdMap_ScrollRotate, emission3rdMap_UVMode, true, true);
+                            lilEditorGUI.LocalizedPropertyAlpha(emission3rdColor);
+                            lilEditorGUI.LocalizedProperty(m_MaterialEditor, emission3rdMainStrength);
+                        lilEditorGUI.DrawLine();
+                            lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowEmission3rdBlendMask, maskBlendRGBAContent, emission3rdBlendMask, emission3rdBlend, emission3rdBlendMask_ScrollRotate, true, true);
+                            lilEditorGUI.LocalizedProperty(m_MaterialEditor, emission3rdBlendMode);
+                        lilEditorGUI.DrawLine();
+                            lilEditorGUI.LocalizedProperty(m_MaterialEditor, emission3rdBlink);
+                        lilEditorGUI.DrawLine();
+                            lilEditorGUI.LocalizedProperty(m_MaterialEditor, emission3rdParallaxDepth);
+                            lilEditorGUI.LocalizedProperty(m_MaterialEditor, emission3rdFluorescence);
+                        lilEditorGUI.DrawLine();
+                            lilEditorGUI.LocalizedProperty(m_MaterialEditor, audioLink2Emission3rd);
+                        lilEditorGUI.DrawLine();
+                            if (GUILayout.Button("Copy Emission3rd"))
+                            {
+                                CopyCategory(emission3rdCategory, material);
+                            }
+                        lilEditorGUI.DrawLine();
+                            if (GUILayout.Button("Paste Emission3rd"))
+                            {
+                                PasteCategory(emission3rdCategory, material);
+                            }
+                        lilEditorGUI.DrawLine();
+                            if (GUILayout.Button("Reset Emission3rd"))
+                            {
+                                if (EditorUtility.DisplayDialog(
+                                    "Reset Confirmation",
+                                    "Emission3rd will be reset to their default values. \nAre you sure?",
+                                    "Reset",
+                                    "Cancel"))
+                                {
+                                    ResetCategory(emission3rdCategory, material);
+                                }
+                            }
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
@@ -1262,6 +1352,8 @@ namespace lilToon
             public bool isShowMatCap4thBumpMap          = false;
             public bool isShowGlitter2ndColorTex        = false;
             public bool isShowGlitter2ndShapeTex        = false;
+            public bool isShowEmission3rdMap            = false;
+            public bool isShowEmission3rdBlendMask      = false;
         }
     }
 }
