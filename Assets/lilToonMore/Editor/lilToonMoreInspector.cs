@@ -756,31 +756,30 @@ namespace lilToon
                             EditorGUI.indentLevel++;
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, main4thDistanceFade);
                             EditorGUI.indentLevel--;
-                                lilEditorGUI.DrawLine();
-                                    lilEditorGUI.LocalizedProperty(m_MaterialEditor, audioLink2Main4th);
-                                lilEditorGUI.DrawLine();
-                                    if (GUILayout.Button("Copy MainColor 4th"))
+                            lilEditorGUI.DrawLine();
+                                lilEditorGUI.LocalizedProperty(m_MaterialEditor, audioLink2Main4th);
+                            lilEditorGUI.DrawLine();
+                                if (GUILayout.Button("Copy MainColor 4th"))
+                                {
+                                    CopyCategory(mainColor4thCategory, material);
+                                }
+                            lilEditorGUI.DrawLine();
+                                if (GUILayout.Button("Paste MainColor 4th"))
+                                {
+                                    PasteCategory(mainColor4thCategory, material);
+                                }
+                            lilEditorGUI.DrawLine();
+                                if (GUILayout.Button("Reset MainColor 4th"))
+                                {
+                                    if (EditorUtility.DisplayDialog(
+                                        "Reset Confirmation",
+                                        "MainColor 4th will be reset to their default values. \nAre you sure?",
+                                        "Reset",
+                                        "Cancel"))
                                     {
-                                        CopyCategory(mainColor4thCategory, material);
+                                        ResetCategory(mainColor4thCategory, material);
                                     }
-                                lilEditorGUI.DrawLine();
-                                    if (GUILayout.Button("Paste MainColor 4th"))
-                                    {
-                                        PasteCategory(mainColor4thCategory, material);
-                                    }
-                                lilEditorGUI.DrawLine();
-                                    if (GUILayout.Button("Reset MainColor 4th"))
-                                    {
-                                        if (EditorUtility.DisplayDialog(
-                                            "Reset Confirmation",
-                                            "MainColor 4th will be reset to their default values. \nAre you sure?",
-                                            "Reset",
-                                            "Cancel"))
-                                        {
-                                            ResetCategory(mainColor4thCategory, material);
-                                        }
-                                    }
-                                lilEditorGUI.DrawLine();
+                                }
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
@@ -831,7 +830,6 @@ namespace lilToon
                                         ResetCategory(mainColor5thCategory, material);
                                     }
                                 }
-                            lilEditorGUI.DrawLine();
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
@@ -861,28 +859,30 @@ namespace lilToon
                             lilEditorGUI.DrawLine();
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, audioLink2Main6th);
                             lilEditorGUI.DrawLine();
-                                    if (GUILayout.Button("Copy MainColor 6th"))
+                                if (GUILayout.Button("Copy MainColor 6th"))
+                                {
+                                    CopyCategory(mainColor6thCategory, material);
+                                }
+                            lilEditorGUI.DrawLine();
+                                if (GUILayout.Button("Paste MainColor 6th"))
+                                {
+                                    PasteCategory(mainColor6thCategory, material);
+                                }
+                            lilEditorGUI.DrawLine();
+                                if (GUILayout.Button("Reset MainColor 6th"))
+                                {
+                                    if (EditorUtility.DisplayDialog(
+                                        "Reset Confirmation",
+                                        "MainColor 6th will be reset to their default values. \nAre you sure?",
+                                        "Reset",
+                                        "Cancel"))
                                     {
-                                        CopyCategory(mainColor6thCategory, material);
+                                        ResetCategory(mainColor6thCategory, material);
                                     }
-                                lilEditorGUI.DrawLine();
-                                    if (GUILayout.Button("Paste MainColor 6th"))
-                                    {
-                                        PasteCategory(mainColor6thCategory, material);
-                                    }
-                                lilEditorGUI.DrawLine();
-                                    if (GUILayout.Button("Reset MainColor 6th"))
-                                    {
-                                        if (EditorUtility.DisplayDialog(
-                                            "Reset Confirmation",
-                                            "MainColor 6th will be reset to their default values. \nAre you sure?",
-                                            "Reset",
-                                            "Cancel"))
-                                        {
-                                            ResetCategory(mainColor6thCategory, material);
-                                        }
-                                    }
-                                lilEditorGUI.DrawLine();
+                                }
+                        EditorGUILayout.EndVertical();
+                    }
+                EditorGUILayout.EndVertical();
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
@@ -917,7 +917,6 @@ namespace lilToon
                                     ResetCategory(bump3rdMapCategory, material);
                                 }
                             }
-                        lilEditorGUI.DrawLine();
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
@@ -931,7 +930,7 @@ namespace lilToon
                                 lilEditorGUI.LocalizedPropertyAlpha(matCap3rdColor);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdMainStrength);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdNormalStrength);
-                                lilEditorGUI.DrawLine();
+                            lilEditorGUI.DrawLine();
                                 lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap3rdBlendMask, maskBlendRGBContent, matCap3rdBlendMask, matCap3rdBlend);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdEnableLighting);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdShadowMask);
@@ -973,7 +972,6 @@ namespace lilToon
                                         ResetCategory(matCap3rdCategory, material);
                                     }
                                 }
-                            lilEditorGUI.DrawLine();
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
@@ -1117,7 +1115,6 @@ namespace lilToon
                                         ResetCategory(glitter2ndCategory, material);
                                     }
                                 }
-                            lilEditorGUI.DrawLine();
                         EditorGUILayout.EndVertical();
                     }
                 EditorGUILayout.EndVertical();
@@ -1158,7 +1155,6 @@ namespace lilToon
                         lilEditorGUI.DrawLine();
                             lilEditorGUI.LocalizedProperty(m_MaterialEditor, warpReplaceRefract);
                             GUILayout.Label("Warning\nThis replaces refraction\nPerformance improvements over built-in refraction\nOnly works in refraction mode");
-                        lilEditorGUI.DrawLine();
                         lilEditorGUI.DrawLine();
                             if (GUILayout.Button("Copy Warp"))
                             {
