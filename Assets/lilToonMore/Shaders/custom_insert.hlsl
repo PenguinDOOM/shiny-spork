@@ -83,7 +83,7 @@
         float4 color4th = 1.0; \
         float4 color5th = 1.0; \
         float4 color6th = 1.0; \
-        lilGetMain3rd(fd, color3rd, main3rdDissolveAlpha LIL_SAMP_IN(sampler_MainTex)); \
+        lilGetMain3rdMore(fd, color3rd, main3rdDissolveAlpha LIL_SAMP_IN(sampler_MainTex)); \
         lilGetMain4th(fd, color4th LIL_SAMP_IN(sampler_MainTex)); \
         lilGetMain5th(fd, color5th LIL_SAMP_IN(sampler_MainTex)); \
         lilGetMain6th(fd, color6th LIL_SAMP_IN(sampler_MainTex));
