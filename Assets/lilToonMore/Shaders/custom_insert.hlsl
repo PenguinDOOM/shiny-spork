@@ -20,10 +20,27 @@
 #endif
 
 #if !defined(OVERRIDE_NORMAL_2ND)
-    #define LIL_SAMPLE_Bump3rdScaleMask bump3rdScale *= LIL_SAMPLE_2D_ST(_Bump3rdScaleMask, sampler_MainTex, fd.uvMain).r
+    #if defined(LIL_FEATURE_Bump2ndScaleMask)
+        #define LIL_SAMPLE_Bump2ndScaleMask bump2ndScale *= LIL_SAMPLE_2D_ST(_Bump2ndScaleMask, sampler_MainTex, fd.uvMain).r
+        #define LIL_SAMPLE_Bump3rdScaleMask bump3rdScale *= LIL_SAMPLE_2D_ST(_Bump3rdScaleMask, sampler_MainTex, fd.uvMain).r
+    #else
+        #define LIL_SAMPLE_Bump2ndScaleMask
+        #define LIL_SAMPLE_Bump3rdScaleMask
+    #endif
 
-    #if defined(LIL_FEATURE_Bump3rdMap)
+    #if defined(LIL_FEATURE_Bump2ndMap)
         #define OVERRIDE_NORMAL_2ND \
+            if(_UseBump2ndMap) \
+                { \
+                    float2 uvBump2nd = fd.uv0; \
+                    if(_Bump2ndMap_UVMode == 1) uvBump2nd = fd.uv1; \
+                    if(_Bump2ndMap_UVMode == 2) uvBump2nd = fd.uv2; \
+                    if(_Bump2ndMap_UVMode == 3) uvBump2nd = fd.uv3; \
+                    float4 normal2ndTex = LIL_SAMPLE_2D_ST(_Bump2ndMap, lil_sampler_linear_repeat, uvBump2nd); \
+                    float bump2ndScale = _Bump2ndScale; \
+                    LIL_SAMPLE_Bump2ndScaleMask; \
+                    normalmap = lilBlendNormal(normalmap, lilUnpackNormalScale(normal2ndTex, bump2ndScale)); \
+            } \
             if(_UseBump3rdMap) \
             { \
                 float2 uvBump3rd = fd.uv0; \

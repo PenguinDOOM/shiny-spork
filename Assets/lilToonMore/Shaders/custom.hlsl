@@ -87,9 +87,11 @@
     bool    _Main6thTexShouldFlipCopy; \
     bool    _AudioLink2Main6th; \
     \
-    bool    _UseBump3rdMap; \
-    uint    _Bump3rdMap_UVMode; \
+    float4  _Bump3rdMap_ST; \
+    float4  _Bump3rdScaleMask_ST; \
     float   _Bump3rdScale; \
+    uint    _Bump3rdMap_UVMode; \
+    bool    _UseBump3rdMap; \
     \
     float4  _MatCap3rdColor; \
     float4  _MatCap3rdTex_ST; \
