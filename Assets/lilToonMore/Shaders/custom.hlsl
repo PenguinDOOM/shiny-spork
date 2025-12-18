@@ -40,7 +40,7 @@
     bool    _Main4thTexShouldFlipMirror; \
     bool    _Main4thTexShouldFlipCopy; \
     bool    _AudioLink2Main4th; \
-    
+    \
     float4  _Color5th; \
     float4  _Main5thTex_ST; \
     float4  _Main5thTex_ScrollRotate; \
@@ -63,7 +63,7 @@
     bool    _Main5thTexShouldFlipMirror; \
     bool    _Main5thTexShouldFlipCopy; \
     bool    _AudioLink2Main5th; \
-    
+    \
     float4  _Color6th; \
     float4  _Main6thTex_ST; \
     float4  _Main6thTex_ScrollRotate; \
@@ -86,11 +86,11 @@
     bool    _Main6thTexShouldFlipMirror; \
     bool    _Main6thTexShouldFlipCopy; \
     bool    _AudioLink2Main6th; \
-    
+    \
     bool    _UseBump3rdMap; \
     uint    _Bump3rdMap_UVMode; \
     float   _Bump3rdScale; \
-    
+    \
     float4  _MatCap3rdColor; \
     float4  _MatCap3rdTex_ST; \
     float4  _MatCap3rdBlendMask_ST; \
@@ -109,7 +109,7 @@
     bool    _MatCap3rdPerspective; \
     bool    _MatCap3rdZRotCancel; \
     bool    _Anisotropy2MatCap3rd; \
-    
+    \
     float4  _MatCap4thColor; \
     float4  _MatCap4thTex_ST; \
     float4  _MatCap4thBlendMask_ST; \
@@ -128,7 +128,7 @@
     bool    _MatCap4thPerspective; \
     bool    _MatCap4thZRotCancel; \
     bool    _Anisotropy2MatCap4th; \
-    
+    \
     float4  _Glitter2ndColor; \
     float4  _Glitter2ndColorTex_ST; \
     float4  _Glitter2ndParams1; \
@@ -150,7 +150,7 @@
     bool    _Glitter2ndApplyTransparency; \
     bool    _Glitter2ndApplyShape; \
     bool    _Glitter2ndAngleRandomize;\
-    
+    \
     float   _WarpAnimSpeed; \
     float   _WarpIntensity; \
     float   _WarpBigAmp; \
@@ -178,7 +178,7 @@
     bool    _UseWarpMain5th; \
     bool    _UseWarpMain6th; \
     bool    _WarpReplaceRefract;\
-
+    \
     float4  _Emission3rdColor; \
     float4  _Emission3rdMap_ST; \
     float4  _Emission3rdMap_ScrollRotate; \
@@ -193,7 +193,7 @@
     uint    _Emission3rdBlendMode; \
     bool    _UseEmission3rd; \
     bool    _AudioLink2Emission3rd; \
-    
+    \
     float4  _MainTex_TexelSize; \
     float4  _MoleColor; \
     float2  _Mole1stPos; \
@@ -247,27 +247,27 @@
     Texture2D _Main4thTex; \
     Texture2D _Main4thBlendMask; \
     SamplerState sampler_Main4thTex; \
-    
+    \
     Texture2D _Main5thTex; \
     Texture2D _Main5thBlendMask; \
     SamplerState sampler_Main5thTex; \
-    
+    \
     Texture2D _Main6thTex; \
     Texture2D _Main6thBlendMask; \
     SamplerState sampler_Main6thTex; \
-    
+    \
     Texture2D _Bump3rdMap; \
     Texture2D _Bump3rdScaleMask; \
-    
+    \
     Texture2D _MatCap3rdTex; \
     Texture2D _MatCap3rdBlendMask; \
-    
+    \
     Texture2D _MatCap4thTex; \
     Texture2D _MatCap4thBlendMask; \
-    
+    \
     Texture2D _Glitter2ndColorTex; \
     Texture2D _Glitter2ndShapeTex; \
-    
+    \
     Texture2D _Emission3rdMap; \
     Texture2D _Emission3rdBlendMask; \
     SamplerState sampler_Emission3rdMap;
@@ -417,7 +417,7 @@
 // -------- ----------------------- --------------------------------------------------------------------
 // uint     renderingLayers         light layer of object (for URP / HDRP)
 // uint     featureFlags            feature flags (for HDRP)
-// uint2    tileIndex               tile index (for HDRP
+// uint2    tileIndex               tile index (for HDRP)
 
 float3 matcap3rdN = 0.0;
 float3 matcap4thN = 0.0;
