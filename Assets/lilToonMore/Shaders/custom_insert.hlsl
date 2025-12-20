@@ -100,20 +100,23 @@
 #endif
 
 #if !defined(OVERRIDE_MAIN3RD)
+    #define OVERRIDE_MAIN3RD \
+        lilGetMain3rdMore(fd, color3rd, main3rdDissolveAlpha LIL_SAMP_IN(sampler_MainTex));
+#endif
+
+#if !defined(BEFORE_ALPHAMASK)
     #if LIL_RENDER != 0
-        #define OVERRIDE_MAIN3RD \
+        #define BEFORE_ALPHAMASK \
             float4 color4th = 1.0; \
             float4 color5th = 1.0; \
-            lilGetMain3rdMore(fd, color3rd, main3rdDissolveAlpha LIL_SAMP_IN(sampler_MainTex)); \
             lilGetMain4th(fd, color4th LIL_SAMP_IN(sampler_MainTex)); \
             lilGetMain5th(fd, color5th LIL_SAMP_IN(sampler_MainTex)); \
             lilMoleDrower(fd LIL_SAMP_IN(sampler_MainTex));
     #else
-        #define OVERRIDE_MAIN3RD \
+        #define BEFORE_ALPHAMASK \
             float4 color4th = 1.0; \
             float4 color5th = 1.0; \
             float4 color6th = 1.0; \
-            lilGetMain3rdMore(fd, color3rd, main3rdDissolveAlpha LIL_SAMP_IN(sampler_MainTex)); \
             lilGetMain4th(fd, color4th LIL_SAMP_IN(sampler_MainTex)); \
             lilGetMain5th(fd, color5th LIL_SAMP_IN(sampler_MainTex)); \
             lilGetMain6th(fd, color6th LIL_SAMP_IN(sampler_MainTex)); \
