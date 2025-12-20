@@ -1,7 +1,7 @@
 {
     "name": "penguin",
     "id": "jp.penguin.liltoonmore.vpm",
-    "author": "lilxyzw",
+    "author": "Penguin",
     "url": "https://github.com/PenguinDOOM/lilToonMore/blob/master/vpm.json",
     "packages":
     {
@@ -9,6 +9,34 @@
         {
             "versions":
             {
+                
+                "2.0.1":
+                {
+                    "name": "jp.penguin.liltoonmore",
+                    "displayName": "lilToonMore",
+                    "version": "2.0.1",
+                    "author": 
+                    {
+                        "name": "Penguin"
+                    },
+                    "unity" : "2022.3",
+                    "description" : "Customized lilToon.",
+                    "vpmDependencies" : 
+                    {
+                        "jp.lilxyzw.liltoon" : "2.3.2"
+                    },
+                    "changelogUrl": "https://github.com/PenguinDOOM/lilToonMore/blob/master/Assets/lilToonMore/CHANGELOG.txt",
+                    "licensesUrl": "https://github.com/PenguinDOOM/lilToonMore/blob/master/Assets/lilToonMore/LICENSE",
+                    "license": "MIT",
+                    "keywords": ["Toon", "Shader", "Material"],
+                    "url" : "https://github.com/PenguinDOOM/lilToonMore/releases/download/2.0.1/jp.penguin.liltoonmore-2.0.1.zip?",
+                    "repo": "https://raw.githubusercontent.com/PenguinDOOM/lilToonMore/refs/heads/master/vpm.json",
+                    "legacyFolders" : 
+                    {
+                        "Assets\\lilToonMore" : "2d67ded333893654ca23a5a37c59dfb2"
+                    },
+                    "zipSHA256": "eb5d858cebd71b8b0a8b00096f8cff7c4bedf0df6a0eee2bc740bb1995a54db4"
+                },
                 
                 "2.0.0":
                 {
