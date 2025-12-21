@@ -156,14 +156,12 @@
     else \
         lilRefraction(fd LIL_SAMP_IN(sampler_MainTex));
 
-#if !defined(OVERRIDE_MATCAP_2ND)
+#if !defined(BEFORE_RIMLIGHT)
     #if LIL_RENDER != 0
-        #define OVERRIDE_MATCAP_2ND \
-            lilGetMatCap2nd(fd LIL_SAMP_IN(sampler_MainTex)); \
+        #define BEFORE_RIMLIGHT \
             lilGetMatCap3rd(fd, matcap3rdN LIL_SAMP_IN(sampler_MainTex));
     #else
-        #define OVERRIDE_MATCAP_2ND \
-            lilGetMatCap2nd(fd LIL_SAMP_IN(sampler_MainTex)); \
+        #define BEFORE_RIMLIGHT \
             lilGetMatCap3rd(fd, matcap3rdN LIL_SAMP_IN(sampler_MainTex)); \
             lilGetMatCap4th(fd, matcap4thN LIL_SAMP_IN(sampler_MainTex));
     #endif
@@ -175,8 +173,10 @@
         lilGlitter2nd(fd LIL_SAMP_IN(sampler_MainTex));
 #endif
 
-#if !defined(OVERRIDE_EMISSION_2ND)
-    #define OVERRIDE_EMISSION_2ND \
-        lilEmission2nd(fd LIL_SAMP_IN(sampler_MainTex)); \
-        lilEmission3rd(fd LIL_SAMP_IN(sampler_MainTex));
+#ifndef LIL_PASS_FORWARDADD
+    #if !defined(OVERRIDE_EMISSION_2ND)
+        #define OVERRIDE_EMISSION_2ND \
+            lilEmission2nd(fd LIL_SAMP_IN(sampler_MainTex)); \
+            lilEmission3rd(fd LIL_SAMP_IN(sampler_MainTex));
+    #endif
 #endif
