@@ -67,7 +67,7 @@
         lilGetMain3rdMore(fd, color3rd, main3rdDissolveAlpha LIL_SAMP_IN(sampler_MainTex));
 #endif
 
-#if LIL_RENDER != 0
+#if LIL_RENDER == 2
     #define BEFORE_ALPHAMASK \
         float4 color4th = 1.0; \
         float4 color5th = 1.0; \
@@ -76,16 +76,20 @@
         lilMoleDrower(fd LIL_SAMP_IN(sampler_MainTex)); \
         float valueFactor = 1.0; \
         float maskedValueFactor = 1.0; \
+        float alphaMask = 1.0; \
         if(_UseLightBasedAlpha) \
         { \
-                float lightBasedAlphaMask = 1.0; \
-                lightBasedAlphaMask = LIL_SAMPLE_2D_ST(_AlphaMask, sampler_MainTex, fd.uvMain).r; \
-                lightBasedAlphaMask = saturate(lightBasedAlphaMask * _AlphaMaskScale + _AlphaMaskValue); \
-                if(_LightBasedAlphaMaskInvert) lightBasedAlphaMask = 1.0 - lightBasedAlphaMask; \
-                float value = max(fd.lightColor.r, max(fd.lightColor.g, fd.lightColor.b)); \
-                float L = _LowestLightThreshold; \
-                float M = _MiddleLightThreshold; \
-                float H = _HighestLightThreshold; \
+            float lightBasedAlphaMask = 1.0; \
+            LIL_SAMPLE_AlphaMask; \
+            lightBasedAlphaMask = alphaMask; \
+            lightBasedAlphaMask = saturate(lightBasedAlphaMask * _AlphaMaskScale + _AlphaMaskValue); \
+            if(_LightBasedAlphaMaskInvert) lightBasedAlphaMask = 1.0 - lightBasedAlphaMask; \
+            float value = max(fd.lightColor.r, max(fd.lightColor.g, fd.lightColor.b)); \
+            float L = _LowestLightThreshold; \
+            float M = _MiddleLightThreshold; \
+            float H = _HighestLightThreshold; \
+            if(_LightBasedAlphaMode == 0) \
+            { \
                 if(_UseMiddleLight) \
                 { \
                     L = min(L, M - 1e-5); \
@@ -100,9 +104,24 @@
                     H = max(H, L + 1e-5); \
                     valueFactor = smoothstep(L, H, value); \
                 } \
-                if(_LightBasedAlphaInvert) valueFactor = 1.0 - valueFactor; \
-                maskedValueFactor = lerp(1.0, valueFactor, lightBasedAlphaMask * _LightBasedAlphaMaskStrength); \
-                fd.col.a *= maskedValueFactor; \
+            } \
+            else if(_LightBasedAlphaMode == 1) \
+            { \
+                valueFactor = step(_LightThreshold, value); \
+            } \
+            else \
+            { \
+                valueFactor = step(L, value) * step(value, H); \
+            } \
+            if(_LightBasedAlphaInvert) valueFactor = 1.0 - valueFactor; \
+            maskedValueFactor = lerp(1.0, valueFactor, lightBasedAlphaMask * _LightBasedAlphaMaskStrength); \
+            fd.col.a *= maskedValueFactor; \
+            if(_UseClamp) \
+            { \
+                float minA = min(_MinAlpha, _MaxAlpha); \
+                float maxA = max(_MaxAlpha, _MinAlpha); \
+                fd.col.a = clamp(fd.col.a, minA, maxA); \
+            } \
         }
 #else
     #define BEFORE_ALPHAMASK \
@@ -125,8 +144,6 @@
     #define OVERRIDE_ALPHAMASK \
         if(_AlphaMaskMode) \
         { \
-            float alphaMask = 1.0; \
-            LIL_SAMPLE_AlphaMask; \
             alphaMask = saturate(alphaMask * _AlphaMaskScale + _AlphaMaskValue); \
             if(_UseLightBasedAlpha && _LightBasedAlphaForceAlphaMask) alphaMask *= maskedValueFactor; \
             if(_AlphaMaskMode == 1) fd.col.a = alphaMask; \

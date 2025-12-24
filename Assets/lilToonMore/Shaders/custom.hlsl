@@ -236,11 +236,16 @@
     float   _LowestLightThreshold; \
     float   _MiddleLightThreshold; \
     float   _HighestLightThreshold; \
+    float   _LightThreshold; \
+    float   _MinAlpha; \
+    float   _MaxAlpha; \
+    uint    _LightBasedAlphaMode; \
     bool    _UseLightBasedAlpha; \
     bool    _UseMiddleLight; \
     bool    _LightBasedAlphaMaskInvert; \
     bool    _LightBasedAlphaInvert; \
-    bool    _LightBasedAlphaForceAlphaMask;
+    bool    _LightBasedAlphaForceAlphaMask; \
+    bool    _UseClamp;
 
 
 
