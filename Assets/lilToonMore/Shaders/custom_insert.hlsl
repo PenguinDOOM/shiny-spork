@@ -77,14 +77,14 @@
         float valueFactor = 1.0; \
         float maskedValueFactor = 1.0; \
         float alphaMask = 1.0; \
+        LIL_SAMPLE_AlphaMask; \
         if(_UseLightBasedAlpha) \
         { \
             float lightBasedAlphaMask = 1.0; \
-            LIL_SAMPLE_AlphaMask; \
-            lightBasedAlphaMask = alphaMask; \
-            lightBasedAlphaMask = saturate(lightBasedAlphaMask * _AlphaMaskScale + _AlphaMaskValue); \
+            if(_UseLightBasedAlphaMask) lightBasedAlphaMask = alphaMask; \
             if(_LightBasedAlphaMaskInvert) lightBasedAlphaMask = 1.0 - lightBasedAlphaMask; \
-            float value = max(fd.lightColor.r, max(fd.lightColor.g, fd.lightColor.b)); \
+            if(_ForceInitializeAlpha) fd.col.a = saturate(fd.col.a + (lightBasedAlphaMask > 0)); \
+            float value = GetLightValue(fd.lightColor, _LightBasedAlphaValueType); \
             float L = _LowestLightThreshold; \
             float M = _MiddleLightThreshold; \
             float H = _HighestLightThreshold; \

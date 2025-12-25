@@ -517,3 +517,23 @@ void lilMoleDrower(inout lilFragData fd LIL_SAMP_IN_FUNC(samp))
         fd.col.rgb = lilBlendColor(fd.col.rgb, moleColor.rgb, mole * moleColor.a, _MoleBlendMode);
     }
 }
+
+float GetLightValue(float3 lightColor, int type)
+{
+    if(type == 0)
+    {
+        // Max RGB
+        return max(lightColor.r, max(lightColor.g, lightColor.b));
+    }
+    else if(type == 1)
+    {
+        // Luminance (Rec.709)
+        return dot(lightColor, float3(0.2126, 0.7152, 0.0722));
+    }
+    else
+    {
+        // HSV V (same as Max RGB, but semantic separation for future expansion)
+        return max(lightColor.r, max(lightColor.g, lightColor.b));
+    }
+}
+
