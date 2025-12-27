@@ -15,8 +15,8 @@
         if(_UseWarp && _UseWarpMain1st) warp(fd.uvMain); \
         LIL_GET_MAIN_TEX \
         LIL_APPLY_MAIN_TONECORRECTION \
-        fd.col *= _Color; \
-        fd.uvMain = bkuvMain;
+        fd.col    *=  _Color; \
+        fd.uvMain =   bkuvMain;
 #endif
 
 #if !defined(OVERRIDE_NORMAL_2ND)
@@ -36,8 +36,8 @@
                     if(_Bump2ndMap_UVMode == 1) uvBump2nd = fd.uv1; \
                     if(_Bump2ndMap_UVMode == 2) uvBump2nd = fd.uv2; \
                     if(_Bump2ndMap_UVMode == 3) uvBump2nd = fd.uv3; \
-                    float4 normal2ndTex = LIL_SAMPLE_2D_ST(_Bump2ndMap, lil_sampler_linear_repeat, uvBump2nd); \
-                    float bump2ndScale = _Bump2ndScale; \
+                    float4  normal2ndTex = LIL_SAMPLE_2D_ST(_Bump2ndMap, lil_sampler_linear_repeat, uvBump2nd); \
+                    float   bump2ndScale = _Bump2ndScale; \
                     LIL_SAMPLE_Bump2ndScaleMask; \
                     normalmap = lilBlendNormal(normalmap, lilUnpackNormalScale(normal2ndTex, bump2ndScale)); \
             } \
@@ -47,8 +47,8 @@
                 if(_Bump3rdMap_UVMode == 1) uvBump3rd = fd.uv1; \
                 if(_Bump3rdMap_UVMode == 2) uvBump3rd = fd.uv2; \
                 if(_Bump3rdMap_UVMode == 3) uvBump3rd = fd.uv3; \
-                float4 normal3rdTex = LIL_SAMPLE_2D_ST(_Bump3rdMap, lil_sampler_linear_repeat, uvBump3rd); \
-                float bump3rdScale = _Bump3rdScale; \
+                float4  normal3rdTex = LIL_SAMPLE_2D_ST(_Bump3rdMap, lil_sampler_linear_repeat, uvBump3rd); \
+                float   bump3rdScale = _Bump3rdScale; \
                 LIL_SAMPLE_Bump3rdScaleMask; \
                 normalmap = lilBlendNormal(normalmap, lilUnpackNormalScale(normal3rdTex, bump3rdScale)); \
             }
@@ -69,60 +69,16 @@
 
 #if LIL_RENDER == 2
     #define BEFORE_ALPHAMASK \
-        float4 color4th = 1.0; \
-        float4 color5th = 1.0; \
+        float4 color4th  = 1.0; \
+        float4 color5th  = 1.0; \
+        float alphaMask  = 1.0; \
+        float mainTexAlpha = fd.col.a; \
+        LIL_SAMPLE_AlphaMask; \
+        alphaMask = saturate(alphaMask * _AlphaMaskScale + _AlphaMaskValue); \
         lilGetMain4th(fd, color4th LIL_SAMP_IN(sampler_MainTex)); \
         lilGetMain5th(fd, color5th LIL_SAMP_IN(sampler_MainTex)); \
         lilMoleDrower(fd LIL_SAMP_IN(sampler_MainTex)); \
-        float valueFactor = 1.0; \
-        float maskedValueFactor = 1.0; \
-        float alphaMask = 1.0; \
-        LIL_SAMPLE_AlphaMask; \
-        if(_UseLightBasedAlpha) \
-        { \
-            float lightBasedAlphaMask = 1.0; \
-            if(_UseLightBasedAlphaMask) lightBasedAlphaMask = alphaMask; \
-            if(_LightBasedAlphaMaskInvert) lightBasedAlphaMask = 1.0 - lightBasedAlphaMask; \
-            if(_ForceInitializeAlpha) fd.col.a = saturate(fd.col.a + (lightBasedAlphaMask > 0)); \
-            float value = GetLightValue(fd.lightColor, _LightBasedAlphaValueType); \
-            float L = _LowestLightThreshold; \
-            float M = _MiddleLightThreshold; \
-            float H = _HighestLightThreshold; \
-            if(_LightBasedAlphaMode == 0) \
-            { \
-                if(_UseMiddleLight) \
-                { \
-                    L = min(L, M - 1e-5); \
-                    H = max(H, M + 1e-5); \
-                    float up   = smoothstep(L, M, value); \
-                    float down = 1.0 - smoothstep(M, H, value); \
-                    valueFactor = up * down; \
-                } \
-                else \
-                { \
-                    L = min(L, H - 1e-5); \
-                    H = max(H, L + 1e-5); \
-                    valueFactor = smoothstep(L, H, value); \
-                } \
-            } \
-            else if(_LightBasedAlphaMode == 1) \
-            { \
-                valueFactor = step(_LightThreshold, value); \
-            } \
-            else \
-            { \
-                valueFactor = step(L, value) * step(value, H); \
-            } \
-            if(_LightBasedAlphaInvert) valueFactor = 1.0 - valueFactor; \
-            maskedValueFactor = lerp(1.0, valueFactor, lightBasedAlphaMask * _LightBasedAlphaMaskStrength); \
-            fd.col.a *= maskedValueFactor; \
-            if(_UseClamp) \
-            { \
-                float minA = min(_MinAlpha, _MaxAlpha); \
-                float maxA = max(_MaxAlpha, _MinAlpha); \
-                fd.col.a = clamp(fd.col.a, minA, maxA); \
-            } \
-        }
+        if(!_LightBasedAlphaPrePost) lilLightBasedAlpha(fd, _LightBasedAlphaLoadType, alphaMask, mainTexAlpha LIL_SAMP_IN(sampler_MainTex));
 #elif LIL_RENDER == 1
     #define BEFORE_ALPHAMASK \
         float4 color4th = 1.0; \
@@ -147,31 +103,21 @@
     #else
         #define LIL_SAMPLE_AlphaMask
     #endif
-
     #if LIL_RENDER == 2
         #define OVERRIDE_ALPHAMASK \
             if(_AlphaMaskMode) \
             { \
-                alphaMask = saturate(alphaMask * _AlphaMaskScale + _AlphaMaskValue); \
-                if(_UseLightBasedAlpha && _LightBasedAlphaForceAlphaMask) alphaMask *= maskedValueFactor; \
-                if(_AlphaMaskMode == 1) fd.col.a = alphaMask; \
-                if(_AlphaMaskMode == 2) fd.col.a = fd.col.a * alphaMask; \
-                if(_AlphaMaskMode == 3) fd.col.a = saturate(fd.col.a + alphaMask); \
-                if(_AlphaMaskMode == 4) fd.col.a = saturate(fd.col.a - alphaMask); \
-            }
-    #elif LIL_RENDER == 1
-        #define OVERRIDE_ALPHAMASK \
-            if(_AlphaMaskMode) \
-            { \
-                float alphaMask = 1.0; \
-                LIL_SAMPLE_AlphaMask; \
-                alphaMask = saturate(alphaMask * _AlphaMaskScale + _AlphaMaskValue); \
                 if(_AlphaMaskMode == 1) fd.col.a = alphaMask; \
                 if(_AlphaMaskMode == 2) fd.col.a = fd.col.a * alphaMask; \
                 if(_AlphaMaskMode == 3) fd.col.a = saturate(fd.col.a + alphaMask); \
                 if(_AlphaMaskMode == 4) fd.col.a = saturate(fd.col.a - alphaMask); \
             }
     #endif
+#endif
+
+#if LIL_RENDER == 2
+    #define BEFORE_DISSOLVE \
+        if(_LightBasedAlphaPrePost) lilLightBasedAlpha(fd, _LightBasedAlphaLoadType, alphaMask, mainTexAlpha LIL_SAMP_IN(sampler_MainTex));
 #endif
 
 #define BEFORE_ANISOTROPY \
@@ -197,17 +143,17 @@
             float4 anisoTangentMap = float4(0.5,0.5,1.0,0.5); \
             LIL_SAMPLE_AnisotropyTangentMap; \
             float3 anisoTangent = lilUnpackNormalScale(anisoTangentMap, 1.0); \
-            fd.T = lilOrthoNormalize(normalize(mul(anisoTangent, fd.TBN)), fd.N); \
-            fd.B = cross(fd.N, fd.T); \
+            fd.T          = lilOrthoNormalize(normalize(mul(anisoTangent, fd.TBN)), fd.N); \
+            fd.B          = cross(fd.N, fd.T); \
             fd.anisotropy = _AnisotropyScale; \
             LIL_SAMPLE_AnisotropyScaleMask; \
             float3 anisoNormalWS = lilGetAnisotropyNormalWS(fd.N, fd.T, fd.B, fd.V, fd.anisotropy); \
-            if(_Anisotropy2Reflection)  fd.reflectionN  = anisoNormalWS; \
-            if(_Anisotropy2MatCap)      fd.matcapN      = anisoNormalWS; \
-            if(_Anisotropy2MatCap2nd)   fd.matcap2ndN   = anisoNormalWS; \
-            if(_Anisotropy2MatCap3rd)   matcap3rdN   = anisoNormalWS; \
-            if(_Anisotropy2MatCap4th)   matcap4thN   = anisoNormalWS; \
-            if(_Anisotropy2Reflection)  fd.perceptualRoughness = saturate(1.2 - abs(fd.anisotropy)); \
+            if(_Anisotropy2Reflection) fd.reflectionN         = anisoNormalWS; \
+            if(_Anisotropy2MatCap)     fd.matcapN             = anisoNormalWS; \
+            if(_Anisotropy2MatCap2nd)  fd.matcap2ndN          = anisoNormalWS; \
+            if(_Anisotropy2MatCap3rd)  matcap3rdN             = anisoNormalWS; \
+            if(_Anisotropy2MatCap4th)  matcap4thN             = anisoNormalWS; \
+            if(_Anisotropy2Reflection) fd.perceptualRoughness = saturate(1.2 - abs(fd.anisotropy)); \
         }
 #endif
 

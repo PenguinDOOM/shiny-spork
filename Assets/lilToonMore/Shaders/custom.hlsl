@@ -232,24 +232,29 @@
     bool    _UseMole8th; \
     bool    _UseMole9th; \
     bool    _UseMole10th; \
-    float   _LightBasedAlphaMaskStrength; \
+    float4  _ParallaxMap_ST; \
+    float   _LightBasedAlphaMaskScale; \
+    float   _LightBasedAlphaMaskValue; \
+    float   _OverrideMinTransparency; \
+    float   _OverrideMaxTransparency; \
     float   _LowestLightThreshold; \
     float   _MiddleLightThreshold; \
     float   _HighestLightThreshold; \
     float   _LightThreshold; \
-    float   _MinAlpha; \
-    float   _MaxAlpha; \
+    float   _MinTransparency; \
+    float   _MaxTransparency; \
+    uint    _LightBasedAlphaLoadType; \
     uint    _LightBasedAlphaValueType; \
     uint    _LightBasedAlphaMode; \
+    uint    _LightBasedAlphaApplyMode; \
     bool    _UseLightBasedAlpha; \
-    bool    _UseLightBasedAlphaMask; \
-    bool    _LightBasedAlphaMaskInvert; \
+    bool    _UseAlphaMaskStyle; \
+    bool    _OverrideMin; \
+    bool    _OverrideMax; \
     bool    _UseMiddleLight; \
     bool    _UseClamp; \
     bool    _LightBasedAlphaInvert; \
-    bool    _LightBasedAlphaForceAlphaMask; \
-    bool    _ForceInitializeAlpha;
-    
+    bool    _LightBasedAlphaPrePost;
 
 
 
