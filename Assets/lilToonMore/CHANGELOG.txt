@@ -1,3 +1,12 @@
+2025/12/27
+Ver. 3.0.0
+Rewritten Light Based Alpha
+- Made it exclusive with the disparity map and reused the mask of the disparity map
+- Maximum transparency can now be chosen from three sources
+- Light Based Alpha has been made into a function
+Some inspector variables have been changed to internal
+Cleaned up the code a bit
+
 2025/12/25
 Ver. 2.2.0
 Updated Light Based Alpha
