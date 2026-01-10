@@ -1,4 +1,4 @@
-name: Release
+name: Release-Advanced
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    name: Release
+    name: Release-Advanced
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,7 +23,7 @@ jobs:
           command: compress
           source: ${{ github.workspace }}/
           dest: './dist'
-          destfilename: 'jp.penguin.liltoonmore-${{github.ref_name}}'
+          destfilename: 'jp.penguin.liltoonmore.advanced-${{github.ref_name}}'
           exclude: '.git .github .gitattributes .gitignore dist'
           format: zip
           includeRoot: 'false'
@@ -50,4 +50,4 @@ jobs:
         with:
           token: ${{ secrets.PAT_FOR_DISPATCH }}
           repository: PenguinDOOM/lilToonMore
-          event-type: update-vpm
+          event-type: update-vpm-advanced
