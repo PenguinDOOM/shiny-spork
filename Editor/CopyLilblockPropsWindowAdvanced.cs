@@ -6,17 +6,17 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
-public class CopyLilblockPropsWindow : EditorWindow
+public class CopyLilblockPropsWindowAdvanced : EditorWindow
 {
-    [MenuItem("Tools/Copy lilblock Property Tools")]
+    [MenuItem("Tools/Copy lilblock Property Tools Advanced")]
     public static void ShowWindow()
     {
-        GetWindow<CopyLilblockPropsWindow>("lilblock Props");
+        GetWindow<CopyLilblockPropsWindowAdvanced>("lilblock Props Advanced");
     }
 
     private void OnGUI()
     {
-        GUILayout.Label("lilblock Property Tools", EditorStyles.boldLabel);
+        GUILayout.Label("lilblock Property Tools Advanced", EditorStyles.boldLabel);
 
         if (GUILayout.Button("1. Copy Property Names"))
         {
@@ -41,7 +41,7 @@ public class CopyLilblockPropsWindow : EditorWindow
         string filePath = Path.Combine(
             projectRoot,
             "Packages",
-            "jp.penguin.liltoonmore",
+            "jp.penguin.liltoonmore.Advanced",
             "Shaders",
             "lilCustomShaderProperties.lilblock"
         );

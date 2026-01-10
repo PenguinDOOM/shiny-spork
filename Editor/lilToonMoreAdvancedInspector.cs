@@ -13,15 +13,15 @@ using Object = UnityEngine.Object;
 
 namespace lilToon
 {
-    public class lilToonMoreInspector : lilToonInspector
+    public class lilToonMoreAdvancedInspector : lilToonInspector
     {
         // Custom properties
         //private static bool isShowCustomProperties;
-        private const string shaderName = "lilToonMore";
-        internal static lilToonMoreEditorSetting ltmedSet { get { return lilToonMoreEditorSetting.instance; } }
+        private const string shaderName = "lilToonMore Advanced";
+        internal static lilToonMoreAdvancedEditorSetting ltmaedSet { get { return lilToonMoreAdvancedEditorSetting.instance; } }
         
 
-        readonly string[] mainColor4thCategory = new string[]
+        readonly string[] mainColor4thCategory_A = new string[]
         {
             "_Color4th",
             "_Main4thTex",
@@ -46,7 +46,7 @@ namespace lilToon
             "_AudioLink2Main4th",
         };
         
-        readonly string[] mainColor5thCategory = new string[]
+        readonly string[] mainColor5thCategory_A = new string[]
         {
             "_Color5th",
             "_Main5thTex",
@@ -71,7 +71,7 @@ namespace lilToon
             "_AudioLink2Main5th"
         };
         
-        readonly string[] mainColor6thCategory = new string[]
+        readonly string[] mainColor6thCategory_A = new string[]
         {
             "_Color6th",
             "_Main6thTex",
@@ -96,7 +96,7 @@ namespace lilToon
             "_AudioLink2Main6th"
         };
         
-        readonly string[] bump3rdMapCategory = new string[]
+        readonly string[] bump3rdMapCategory_A = new string[]
         {
             "_Bump3rdMap",
             "_Bump3rdMap_UVMode",
@@ -104,7 +104,7 @@ namespace lilToon
             "_Bump3rdScaleMask"
         };
         
-        readonly string[] matCap3rdCategory = new string[]
+        readonly string[] matCap3rdCategory_A = new string[]
         {
             "_MatCap3rdColor",
             "_MatCap3rdTex",
@@ -125,7 +125,7 @@ namespace lilToon
             "_Anisotropy2MatCap3rd"
         };
         
-        readonly string[] matCap4thCategory = new string[]
+        readonly string[] matCap4thCategory_A = new string[]
         {
             "_MatCap4thColor",
             "_MatCap4thTex",
@@ -146,7 +146,7 @@ namespace lilToon
             "_Anisotropy2MatCap4th"
         };
         
-        readonly string[] glitter2ndCategory = new string[]
+        readonly string[] glitter2ndCategory_A = new string[]
         {
             "_Glitter2ndUVMode",
             "_Glitter2ndColor",
@@ -170,7 +170,7 @@ namespace lilToon
             "_Glitter2ndVRParallaxStrength"
         };
         
-        readonly string[] warpCategory = new string[]
+        readonly string[] warpCategory_A = new string[]
         {
             "_WarpAnimSpeed",
             "_WarpIntensity",
@@ -200,7 +200,7 @@ namespace lilToon
             "_WarpReplaceRefract",
         };
         
-        readonly string[] emission3rdCategory = new string[]
+        readonly string[] emission3rdCategory_A = new string[]
         {
             "_UseEmission3rd",
             "_Emission3rdColor",
@@ -218,7 +218,7 @@ namespace lilToon
             "_AudioLink2Emission3rd"
         };
         
-        readonly string[] moleCategory = new string[]
+        readonly string[] moleCategory_A = new string[]
         {
             "_UseMole",
             "_MoleColor",
@@ -266,7 +266,7 @@ namespace lilToon
             "_Mole10thBlur"
         };
         
-        readonly string[] lightAlphaCategory = new string[]
+        readonly string[] lightAlphaCategory_A = new string[]
         {
             "_UseAlphaMaskStyle",
             "_LightBasedAlphaMaskScale",
@@ -554,7 +554,7 @@ namespace lilToon
         // ▼ コピー／ペースト用バッファ
         Dictionary<string, object> copyBuffer = new Dictionary<string, object>();
         
-        void CopyCategory(string[] props, Material material)
+        void CopyCategory_A(string[] props, Material material)
         {
             copyBuffer.Clear();
 
@@ -612,7 +612,7 @@ namespace lilToon
             }
         }
         
-        void PasteCategory(string[] props, Material material)
+        void PasteCategory_A(string[] props, Material material)
         {
             if (copyBuffer.Count == 0)
             {
@@ -660,7 +660,7 @@ namespace lilToon
 
 
         
-        void ResetCategory(string[] props, Material material)
+        void ResetCategory_A(string[] props, Material material)
         {
             // Undo 対応
             Undo.RecordObject(material, "Reset Custom Property");
@@ -992,8 +992,8 @@ namespace lilToon
             // customBox        box (similar to unity default box)
             // customToggleFont label for box
 
-            ltmedSet.isShowMain = lilEditorGUI.Foldout(GetLoc("sMainColorSetting"), ltmedSet.isShowMain);
-            if(ltmedSet.isShowMain)
+            ltmaedSet.isShowMain = lilEditorGUI.Foldout(GetLoc("sMainColorSetting"), ltmaedSet.isShowMain);
+            if(ltmaedSet.isShowMain)
             {
                 EditorGUILayout.BeginVertical(boxOuter);
                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMain4thTex, false);
@@ -1022,12 +1022,12 @@ namespace lilToon
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Copy MainColor 4th"))
                                 {
-                                    CopyCategory(mainColor4thCategory, material);
+                                    CopyCategory_A(mainColor4thCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Paste MainColor 4th"))
                                 {
-                                    PasteCategory(mainColor4thCategory, material);
+                                    PasteCategory_A(mainColor4thCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Reset MainColor 4th"))
@@ -1038,7 +1038,7 @@ namespace lilToon
                                         "Reset",
                                         "Cancel"))
                                     {
-                                        ResetCategory(mainColor4thCategory, material);
+                                        ResetCategory_A(mainColor4thCategory_A, material);
                                     }
                                 }
                         EditorGUILayout.EndVertical();
@@ -1072,12 +1072,12 @@ namespace lilToon
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Copy MainColor 5th"))
                                 {
-                                    CopyCategory(mainColor5thCategory, material);
+                                    CopyCategory_A(mainColor5thCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Paste MainColor 5th"))
                                 {
-                                    PasteCategory(mainColor5thCategory, material);
+                                    PasteCategory_A(mainColor5thCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Reset MainColor 5th"))
@@ -1088,7 +1088,7 @@ namespace lilToon
                                         "Reset",
                                         "Cancel"))
                                     {
-                                        ResetCategory(mainColor5thCategory, material);
+                                        ResetCategory_A(mainColor5thCategory_A, material);
                                     }
                                 }
                         EditorGUILayout.EndVertical();
@@ -1128,12 +1128,12 @@ namespace lilToon
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Copy MainColor 6th"))
                                     {
-                                        CopyCategory(mainColor6thCategory, material);
+                                        CopyCategory_A(mainColor6thCategory_A, material);
                                     }
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Paste MainColor 6th"))
                                     {
-                                        PasteCategory(mainColor6thCategory, material);
+                                        PasteCategory_A(mainColor6thCategory_A, material);
                                     }
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Reset MainColor 6th"))
@@ -1144,7 +1144,7 @@ namespace lilToon
                                             "Reset",
                                             "Cancel"))
                                         {
-                                            ResetCategory(mainColor6thCategory, material);
+                                            ResetCategory_A(mainColor6thCategory_A, material);
                                         }
                                     }
                             EditorGUILayout.EndVertical();
@@ -1193,8 +1193,8 @@ namespace lilToon
                                             }
                                             lilEditorGUI.LocalizedProperty(m_MaterialEditor, cutoff);
 
-                                            ltmedSet.isAlphaMaskModeAdvanced = EditorGUILayout.Toggle("Show advanced editor", ltmedSet.isAlphaMaskModeAdvanced);
-                                            if(ltmedSet.isAlphaMaskModeAdvanced)
+                                            ltmaedSet.isAlphaMaskModeAdvanced = EditorGUILayout.Toggle("Show advanced editor", ltmaedSet.isAlphaMaskModeAdvanced);
+                                            if(ltmaedSet.isAlphaMaskModeAdvanced)
                                             {
                                                 EditorGUI.indentLevel++;
                                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, alphaMaskScale);
@@ -1223,8 +1223,8 @@ namespace lilToon
                                                 lightBasedAlphaMaskValue.floatValue = transparency + (invertAlphaMask ? 1.0f : 0.0f);
                                             }
                                             lilEditorGUI.LocalizedProperty(m_MaterialEditor, cutoff);
-                                            ltmedSet.isLightBasedAlphaMaskAdvanced = EditorGUILayout.Toggle("Show advanced editor", ltmedSet.isLightBasedAlphaMaskAdvanced);
-                                            if(ltmedSet.isLightBasedAlphaMaskAdvanced)
+                                            ltmaedSet.isLightBasedAlphaMaskAdvanced = EditorGUILayout.Toggle("Show advanced editor", ltmaedSet.isLightBasedAlphaMaskAdvanced);
+                                            if(ltmaedSet.isLightBasedAlphaMaskAdvanced)
                                             {
                                                 EditorGUI.indentLevel++;
                                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, lightBasedAlphaMaskScale);
@@ -1274,12 +1274,12 @@ namespace lilToon
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Copy Light Based Alpha"))
                                     {
-                                        CopyCategory(lightAlphaCategory, material);
+                                        CopyCategory_A(lightAlphaCategory_A, material);
                                     }
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Paste Light Based Alpha"))
                                     {
-                                        PasteCategory(lightAlphaCategory, material);
+                                        PasteCategory_A(lightAlphaCategory_A, material);
                                     }
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Reset Light Based Alpha"))
@@ -1290,7 +1290,7 @@ namespace lilToon
                                             "Reset",
                                             "Cancel"))
                                         {
-                                            ResetCategory(lightAlphaCategory, material);
+                                            ResetCategory_A(lightAlphaCategory_A, material);
                                         }
                                     }
                             EditorGUILayout.EndVertical();
@@ -1299,8 +1299,8 @@ namespace lilToon
                 }
             }
             
-            ltmedSet.isShowEmission = lilEditorGUI.Foldout(GetLoc("sEmissionSetting"), ltmedSet.isShowEmission);
-            if(ltmedSet.isShowEmission)
+            ltmaedSet.isShowEmission = lilEditorGUI.Foldout(GetLoc("sEmissionSetting"), ltmaedSet.isShowEmission);
+            if(ltmaedSet.isShowEmission)
             {
                 if(useEmission2nd.floatValue == 0)
                 {
@@ -1314,11 +1314,11 @@ namespace lilToon
                         if(useEmission3rd.floatValue == 1)
                         {
                             EditorGUILayout.BeginVertical(boxInnerHalf);
-                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowEmission3rdMap, colorMaskRGBAContent, emission3rdMap, emission3rdColor, emission3rdMap_ScrollRotate, emission3rdMap_UVMode, true, true);
+                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowEmission3rdMap, colorMaskRGBAContent, emission3rdMap, emission3rdColor, emission3rdMap_ScrollRotate, emission3rdMap_UVMode, true, true);
                                 lilEditorGUI.LocalizedPropertyAlpha(emission3rdColor);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, emission3rdMainStrength);
                             lilEditorGUI.DrawLine();
-                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowEmission3rdBlendMask, maskBlendRGBAContent, emission3rdBlendMask, emission3rdBlend, emission3rdBlendMask_ScrollRotate, true, true);
+                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowEmission3rdBlendMask, maskBlendRGBAContent, emission3rdBlendMask, emission3rdBlend, emission3rdBlendMask_ScrollRotate, true, true);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, emission3rdBlendMode);
                             lilEditorGUI.DrawLine();
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, emission3rdBlink);
@@ -1330,12 +1330,12 @@ namespace lilToon
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Copy Emission3rd"))
                                 {
-                                    CopyCategory(emission3rdCategory, material);
+                                    CopyCategory_A(emission3rdCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Paste Emission3rd"))
                                 {
-                                    PasteCategory(emission3rdCategory, material);
+                                    PasteCategory_A(emission3rdCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Reset Emission3rd"))
@@ -1346,7 +1346,7 @@ namespace lilToon
                                         "Reset",
                                         "Cancel"))
                                     {
-                                        ResetCategory(emission3rdCategory, material);
+                                        ResetCategory_A(emission3rdCategory_A, material);
                                     }
                                 }
                             EditorGUILayout.EndVertical();
@@ -1355,8 +1355,8 @@ namespace lilToon
                 }
             }
             
-            ltmedSet.isShowNormal = lilEditorGUI.Foldout(GetLoc("sNormalMapSetting"), ltmedSet.isShowNormal);
-            if(ltmedSet.isShowNormal)
+            ltmaedSet.isShowNormal = lilEditorGUI.Foldout(GetLoc("sNormalMapSetting"), ltmaedSet.isShowNormal);
+            if(ltmaedSet.isShowNormal)
             {
                 if(useBump2ndMap.floatValue == 0)
                 {
@@ -1370,18 +1370,18 @@ namespace lilToon
                         if(useBump3rdMap.floatValue == 1)
                         {
                             EditorGUILayout.BeginVertical(boxInnerHalf);
-                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowBump3rdMap, normalMapContent, bump3rdMap, bump3rdScale, bump3rdMap_UVMode, "UV Mode|UV0|UV1|UV2|UV3");
+                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowBump3rdMap, normalMapContent, bump3rdMap, bump3rdScale, bump3rdMap_UVMode, "UV Mode|UV0|UV1|UV2|UV3");
                             lilEditorGUI.DrawLine();
-                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowBump3rdScaleMask, maskStrengthContent, bump3rdScaleMask);
+                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowBump3rdScaleMask, maskStrengthContent, bump3rdScaleMask);
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Copy NormalMap 3rd"))
                                 {
-                                    CopyCategory(bump3rdMapCategory, material);
+                                    CopyCategory_A(bump3rdMapCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Paste NormalMap 3rd"))
                                 {
-                                    PasteCategory(bump3rdMapCategory, material);
+                                    PasteCategory_A(bump3rdMapCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Reset NormalMap 3rd"))
@@ -1392,7 +1392,7 @@ namespace lilToon
                                         "Reset",
                                         "Cancel"))
                                     {
-                                        ResetCategory(bump3rdMapCategory, material);
+                                        ResetCategory_A(bump3rdMapCategory_A, material);
                                     }
                                 }
                             EditorGUILayout.EndVertical();
@@ -1401,20 +1401,20 @@ namespace lilToon
                 }
             }
             
-            ltmedSet.isShowMatCap = lilEditorGUI.Foldout(GetLoc("sMatCapSetting"), ltmedSet.isShowMatCap);
-            if(ltmedSet.isShowMatCap)
+            ltmaedSet.isShowMatCap = lilEditorGUI.Foldout(GetLoc("sMatCapSetting"), ltmaedSet.isShowMatCap);
+            if(ltmaedSet.isShowMatCap)
             {
                 EditorGUILayout.BeginVertical(boxOuter);
                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMatCap3rd, false);
                     if(useMatCap3rd.floatValue == 1)
                     {
                         EditorGUILayout.BeginVertical(boxInnerHalf);
-                                lilEditorGUI.MatCapTextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap3rdUV, matcapContent, matCap3rdTex, matCap3rdColor, matCap3rdBlendUV1, matCap3rdZRotCancel, matCap3rdPerspective, matCap3rdVRParallaxStrength);
+                                lilEditorGUI.MatCapTextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowMatCap3rdUV, matcapContent, matCap3rdTex, matCap3rdColor, matCap3rdBlendUV1, matCap3rdZRotCancel, matCap3rdPerspective, matCap3rdVRParallaxStrength);
                                 lilEditorGUI.LocalizedPropertyAlpha(matCap3rdColor);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdMainStrength);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdNormalStrength);
                             lilEditorGUI.DrawLine();
-                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap3rdBlendMask, maskBlendRGBContent, matCap3rdBlendMask, matCap3rdBlend);
+                                lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowMatCap3rdBlendMask, maskBlendRGBContent, matCap3rdBlendMask, matCap3rdBlend);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdEnableLighting);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdShadowMask);
                                 lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap3rdBackfaceMask);
@@ -1430,12 +1430,12 @@ namespace lilToon
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Copy MatCap 3rd"))
                                 {
-                                    CopyCategory(matCap3rdCategory, material);
+                                    CopyCategory_A(matCap3rdCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Paste MatCap 3rd"))
                                 {
-                                    PasteCategory(matCap3rdCategory, material);
+                                    PasteCategory_A(matCap3rdCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Reset MatCap 3rd"))
@@ -1446,7 +1446,7 @@ namespace lilToon
                                         "Reset",
                                         "Cancel"))
                                     {
-                                        ResetCategory(matCap3rdCategory, material);
+                                        ResetCategory_A(matCap3rdCategory_A, material);
                                     }
                                 }
                         EditorGUILayout.EndVertical();
@@ -1464,12 +1464,12 @@ namespace lilToon
                         if(useMatCap4th.floatValue == 1)
                         {
                             EditorGUILayout.BeginVertical(boxInnerHalf);
-                                    lilEditorGUI.MatCapTextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap4thUV, matcapContent, matCap4thTex, matCap4thColor, matCap4thBlendUV1, matCap4thZRotCancel, matCap4thPerspective, matCap4thVRParallaxStrength);
+                                    lilEditorGUI.MatCapTextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowMatCap4thUV, matcapContent, matCap4thTex, matCap4thColor, matCap4thBlendUV1, matCap4thZRotCancel, matCap4thPerspective, matCap4thVRParallaxStrength);
                                     lilEditorGUI.LocalizedPropertyAlpha(matCap4thColor);
                                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thMainStrength);
                                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thNormalStrength);
                                 lilEditorGUI.DrawLine();
-                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowMatCap4thBlendMask, maskBlendRGBContent, matCap4thBlendMask, matCap4thBlend);
+                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowMatCap4thBlendMask, maskBlendRGBContent, matCap4thBlendMask, matCap4thBlend);
                                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thEnableLighting);
                                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thShadowMask);
                                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, matCap4thBackfaceMask);
@@ -1485,12 +1485,12 @@ namespace lilToon
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Copy MatCap 4th"))
                                     {
-                                        CopyCategory(matCap4thCategory, material);
+                                        CopyCategory_A(matCap4thCategory_A, material);
                                     }
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Paste MatCap 4th"))
                                     {
-                                        PasteCategory(matCap4thCategory, material);
+                                        PasteCategory_A(matCap4thCategory_A, material);
                                     }
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Reset MatCap 4th"))
@@ -1501,7 +1501,7 @@ namespace lilToon
                                             "Reset",
                                             "Cancel"))
                                         {
-                                            ResetCategory(matCap4thCategory, material);
+                                            ResetCategory_A(matCap4thCategory_A, material);
                                         }
                                     }
                             EditorGUILayout.EndVertical();
@@ -1510,8 +1510,8 @@ namespace lilToon
                 }
             }
             
-            ltmedSet.isShowGlitter = lilEditorGUI.Foldout(GetLoc("sGlitterSetting"), ltmedSet.isShowGlitter);
-            if(ltmedSet.isShowGlitter)
+            ltmaedSet.isShowGlitter = lilEditorGUI.Foldout(GetLoc("sGlitterSetting"), ltmaedSet.isShowGlitter);
+            if(ltmaedSet.isShowGlitter)
             {
                 if(useGlitter.floatValue == 0)
                 {
@@ -1526,7 +1526,7 @@ namespace lilToon
                         {
                             EditorGUILayout.BeginVertical(boxInnerHalf);
                                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, glitter2ndUVMode);
-                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowGlitter2ndColorTex, colorMaskRGBAContent, glitter2ndColorTex, glitter2ndColor, glitter2ndColorTex_UVMode, "UV Mode|UV0|UV1|UV2|UV3");
+                                    lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowGlitter2ndColorTex, colorMaskRGBAContent, glitter2ndColorTex, glitter2ndColor, glitter2ndColorTex_UVMode, "UV Mode|UV0|UV1|UV2|UV3");
                                 EditorGUI.indentLevel++;
                                     lilEditorGUI.LocalizedPropertyAlpha(glitter2ndColor);
                                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, glitter2ndMainStrength);
@@ -1540,7 +1540,7 @@ namespace lilToon
                                     if(glitter2ndApplyShape.floatValue > 0.5f)
                                     {
                                         EditorGUI.indentLevel++;
-                                            lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmedSet.isShowGlitter2ndShapeTex, customMaskContent, glitter2ndShapeTex);
+                                            lilEditorGUI.TextureGUI(m_MaterialEditor, false, ref ltmaedSet.isShowGlitter2ndShapeTex, customMaskContent, glitter2ndShapeTex);
                                             lilEditorGUI.LocalizedProperty(m_MaterialEditor, glitter2ndAtras);
                                             lilEditorGUI.LocalizedProperty(m_MaterialEditor, glitter2ndAngleRandomize);
                                         EditorGUI.indentLevel--;
@@ -1584,12 +1584,12 @@ namespace lilToon
                                     lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Copy Glitter 2nd"))
                                     {
-                                        CopyCategory(glitter2ndCategory, material);
+                                        CopyCategory_A(glitter2ndCategory_A, material);
                                     }
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Paste Glitter 2nd"))
                                     {
-                                        PasteCategory(glitter2ndCategory, material);
+                                        PasteCategory_A(glitter2ndCategory_A, material);
                                     }
                                 lilEditorGUI.DrawLine();
                                     if (GUILayout.Button("Reset Glitter 2nd"))
@@ -1600,7 +1600,7 @@ namespace lilToon
                                             "Reset",
                                             "Cancel"))
                                         {
-                                            ResetCategory(glitter2ndCategory, material);
+                                            ResetCategory_A(glitter2ndCategory_A, material);
                                         }
                                     }
                             EditorGUILayout.EndVertical();
@@ -1609,8 +1609,8 @@ namespace lilToon
                 }
             }
             
-            ltmedSet.isShowWarp = Foldout("UVワープ / UV Warp", "UVワープ / UV Warp", ltmedSet.isShowWarp);
-            if(ltmedSet.isShowWarp)
+            ltmaedSet.isShowWarp = Foldout("UVワープ / UV Warp", "UVワープ / UV Warp", ltmaedSet.isShowWarp);
+            if(ltmaedSet.isShowWarp)
             {
                 EditorGUILayout.BeginVertical(boxOuter);
                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, useWarp, false);
@@ -1651,12 +1651,12 @@ namespace lilToon
                         lilEditorGUI.DrawLine();
                             if (GUILayout.Button("Copy Warp"))
                             {
-                                CopyCategory(warpCategory, material);
+                                CopyCategory_A(warpCategory_A, material);
                             }
                         lilEditorGUI.DrawLine();
                             if (GUILayout.Button("Paste Warp"))
                             {
-                                PasteCategory(warpCategory, material);
+                                PasteCategory_A(warpCategory_A, material);
                             }
                         lilEditorGUI.DrawLine();
                             if (GUILayout.Button("Reset Warp"))
@@ -1667,7 +1667,7 @@ namespace lilToon
                                     "Reset",
                                     "Cancel"))
                                 {
-                                    ResetCategory(warpCategory, material);
+                                    ResetCategory_A(warpCategory_A, material);
                                 }
                             }
                         EditorGUILayout.EndVertical();
@@ -1675,8 +1675,8 @@ namespace lilToon
                 EditorGUILayout.EndVertical();
             }
             
-            ltmedSet.isShowMole = Foldout("ほくろ / Mole", "ほくろ / Mole", ltmedSet.isShowMole);
-            if(ltmedSet.isShowMole)
+            ltmaedSet.isShowMole = Foldout("ほくろ / Mole", "ほくろ / Mole", ltmaedSet.isShowMole);
+            if(ltmaedSet.isShowMole)
             {
                 EditorGUILayout.BeginVertical(boxOuter);
                     lilEditorGUI.LocalizedProperty(m_MaterialEditor, useMole, false);
@@ -1859,12 +1859,12 @@ namespace lilToon
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Copy Mole"))
                                 {
-                                    CopyCategory(moleCategory, material);
+                                    CopyCategory_A(moleCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Paste Mole"))
                                 {
-                                    PasteCategory(moleCategory, material);
+                                    PasteCategory_A(moleCategory_A, material);
                                 }
                             lilEditorGUI.DrawLine();
                                 if (GUILayout.Button("Reset Mole"))
@@ -1875,7 +1875,7 @@ namespace lilToon
                                         "Reset",
                                         "Cancel"))
                                     {
-                                        ResetCategory(moleCategory, material);
+                                        ResetCategory_A(moleCategory_A, material);
                                     }
                                 }
                         EditorGUILayout.EndVertical();
@@ -1950,7 +1950,7 @@ namespace lilToon
             ltsmgem     = Shader.Find("Hidden/"  + shaderName + "/MultiGem");
         }
         
-        internal class lilToonMoreEditorSetting : ScriptableSingleton<lilToonMoreEditorSetting>
+        internal class lilToonMoreAdvancedEditorSetting : ScriptableSingleton<lilToonMoreAdvancedEditorSetting>
         {
             internal bool isShowBump3rdMap                = false;
             internal bool isShowBump3rdScaleMask          = false;
