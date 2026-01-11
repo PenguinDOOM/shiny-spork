@@ -19,9 +19,9 @@ jobs:
       major: ${{ steps.extract_version.outputs.major }}
       minor: ${{ steps.extract_version.outputs.minor }}
       patch: ${{ steps.extract_version.outputs.patch }}
-      update_major: ${{ steps.extract_update_version.outputs.major }}
-      update_minor: ${{ steps.extract_update_version.outputs.minor }}
-      update_patch: ${{ steps.extract_update_version.outputs.patch }}
+      update_major: ${{ steps.extract_version.outputs.update_major }}
+      update_minor: ${{ steps.extract_version.outputs.update_minor }}
+      update_patch: ${{ steps.extract_version.outputs.update_patch }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -47,20 +47,19 @@ jobs:
           echo "patch=$PATCH" >> "$GITHUB_OUTPUT"
           
           echo "Detected Version: $MAJOR.$MINOR.$PATCH"
-      - id: extract_update_version
-        run: |
+          
           UPDATE_VERSION=$(jq -r '.version' ./update_trigger.json) 2>/dev/null || echo "v0.0.0"
           UPDATE_VERSION_NO_V=${UPDATE_VERSION#v}
           
-          MAJOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f1)
-          MINOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f2)
-          PATCH=$(echo $UPDATE_VERSION_NO_V | cut -d. -f3 | cut -d- -f1)
+          UPDATE_MAJOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f1)
+          UPDATE_MINOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f2)
+          UPDATE_PATCH=$(echo $UPDATE_VERSION_NO_V | cut -d. -f3 | cut -d- -f1)
           
-          echo "update_major=$major" >> "$GITHUB_OUTPUT"
-          echo "update_minor=$minor" >> "$GITHUB_OUTPUT"
-          echo "update_patch=$patch" >> "$GITHUB_OUTPUT"
+          echo "update_major=$UPDATE_MAJOR" >> "$GITHUB_OUTPUT"
+          echo "update_minor=$UPDATE_MINOR" >> "$GITHUB_OUTPUT"
+          echo "update_patch=$UPDATE_PATCH" >> "$GITHUB_OUTPUT"
           
-          echo "Detected Version: $MAJOR.$MINOR.$PATCH"
+          echo "Detected Update Version: $UPDATE_MAJOR.$UPDATE_MINOR.$UPDATE_PATCH"
 
   release:
     permissions:
