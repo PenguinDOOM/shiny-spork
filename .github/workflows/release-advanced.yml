@@ -5,6 +5,9 @@ on:
     tags:
       - '*.*.*'
 
+env:
+  VPM_Repository: lilToonMore
+
 jobs:
   release:
     name: Release-Advanced
@@ -17,13 +20,22 @@ jobs:
       - name: Pull tags
         run: git fetch --tags --force
 
+      - name: package.json version check
+        run: |
+          echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+          if VERSION == ${{github.ref_name}}; then
+            echo "❌ Error: Version $VERSION package.json version mismatch"
+            exit 1
+          fi
+          echo "NAME=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
         with:
           command: compress
           source: ${{ github.workspace }}/
           dest: './dist'
-          destfilename: 'jp.penguin.liltoonmore.advanced-${{github.ref_name}}'
+          destfilename: '${{env.NAME}}-${{github.ref_name}}'
           exclude: '.git .github .gitattributes .gitignore dist'
           format: zip
           includeRoot: 'false'
@@ -45,9 +57,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Trigger Repository B Workflow
+      - name: Trigger VPM Repository Workflow
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.PAT_FOR_DISPATCH }}
-          repository: PenguinDOOM/lilToonMore
-          event-type: update-vpm-advanced
+          repository: ${{github.repository_owner}}/${{env.VPM_Repository}}
+          event-type: update-vpm
