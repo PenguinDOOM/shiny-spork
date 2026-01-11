@@ -148,7 +148,8 @@ jobs:
              --arg lic "$LICENSE_URL" \
              --arg url "$URL" \
              '.version = $v | .changelogUrl = $cl | .licensesUrl = $lic | .url = $url' \
-             ./package.json
+             ./package.json > ./package.json.tmp
+          mv ./package.json.tmp ./package.json
           cat package.json
           exit 1
         env:
