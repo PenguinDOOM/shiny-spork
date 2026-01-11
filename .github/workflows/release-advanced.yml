@@ -2,36 +2,109 @@ name: Release-Advanced
 
 on:
   push:
-    tags:
-      - '*.*.*'
+    paths:
+      - update_trigger.json
   workflow_dispatch:
 
 env:
   VPM_Repository: lilToonMore
 
 jobs:
-  release:
-    name: Release-Advanced
+  extract-semantic-version:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    outputs:
+      major: ${{ steps.extract_version.outputs.major }}
+      minor: ${{ steps.extract_version.outputs.minor }}
+      patch: ${{ steps.extract_version.outputs.patch }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-tags: true
+      - name: Fetch all tags
+        run: git fetch --tags
+      - name: Describe latest tag
+        id: describe_latest_tag
+        run: |
+          tag=$(git describe --tags `git rev-list --tags --max-count=1`) 2>/dev/null || echo "v0.0.0"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - id: extract_version
+        run: |
+          tag=${{ steps.describe_latest_tag.outputs.tag }}
+          tag_without_v=${tag#v}
+          
+          MAJOR=$(echo $tag_without_v | cut -d. -f1)
+          MINOR=$(echo $tag_without_v | cut -d. -f2)
+          PATCH=$(echo $tag_without_v | cut -d. -f3 | cut -d- -f1)
+          
+          echo "major=$MAJOR" >> "$GITHUB_OUTPUT"
+          echo "minor=$MINOR" >> "$GITHUB_OUTPUT"
+          echo "patch=$PATCH" >> "$GITHUB_OUTPUT"
+          
+          echo "Detected Version: $MAJOR.$MINOR.$PATCH"
+      - id: extract_update_version
+        run: |
+          UPDATE_VERSION=$(jq -r '.version' ./update_trigger.json) 2>/dev/null || echo "v0.0.0"
+          UPDATE_VERSION_NO_V=${UPDATE_VERSION#v}
+          
+          MAJOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f1)
+          MINOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f2)
+          PATCH=$(echo $UPDATE_VERSION_NO_V | cut -d. -f3 | cut -d- -f1)
+          
+          echo "major=$major" >> "$GITHUB_OUTPUT"
+          echo "minor=$minor" >> "$GITHUB_OUTPUT"
+          echo "patch=$patch" >> "$GITHUB_OUTPUT"
+
+  release:
     permissions:
       contents: write
+    name: Release-Advanced
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    needs: extract-semantic-version
+    env:
+      MAJOR: ${{ needs.extract-semantic-version.outputs.major }}
+      MINOR: ${{ needs.extract-semantic-version.outputs.minor }}
+      PATCH: ${{ needs.extract-semantic-version.outputs.patch }}
+      UPDATE_MAJOR: ${{ steps.extract_update_version.outputs.major }}
+      UPDATE_MINOR: ${{ steps.extract_update_version.outputs.minor }}
+      UPDATE_PATCH: ${{ steps.extract_update_version.outputs.patch }}
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-tags: true
 
-      - name: Pull tags
+      - name: Setup version
         run: |
-          git fetch --tags --force
-          echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+          echo "$MAJOR"
+          echo "$MINOR"
+          echo "$PATCH"
+          echo "$UPDATE_MAJOR"
+          echo "$UPDATE_MINOR"
+          echo "$UPDATE_PATCH"
+          exit 1
 
-      - name: package.json version check
+      - name: version check
         run: |
-          echo "VERSION=$(jq -r '.version' ./package.json)" >> $GITHUB_ENV
-          if [${{env.VERSION}} != ${{env.LATEST_TAG}}]; then
+          UPDATE_VERSION=$(jq -r '.version' ./update_trigger.json)
+          VERSION=$(jq -r '.version' ./package.json)
+          NAME=$(jq -r '.name' ./package.json)
+          if [$VERSION != ${{env.LATEST_TAG}}]; then
             echo "❌ Error: Version $VERSION package.json version mismatch"
             exit 1
           fi
-          echo "NAME=$(jq -r '.name' ./package.json)" >> $GITHUB_ENV
+          if [$VERSION != ${{env.LATEST_TAG}}]; then
+            echo "❌ Error: Version $VERSION package.json version mismatch"
+            exit 1
+          fi
+          echo "$VERSION" >> $GITHUB_ENV
+          echo "$NAME" >> $GITHUB_ENV
 
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
