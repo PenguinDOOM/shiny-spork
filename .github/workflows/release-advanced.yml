@@ -20,12 +20,14 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Pull tags
-        run: git fetch --tags --force
+        run: |
+          git fetch --tags --force
+          echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
       - name: package.json version check
         run: |
           echo "VERSION=$(jq -r '.version' ./package.json)" >> $GITHUB_ENV
-          if [${{env.VERSION}} != ${{github.ref_name}}]; then
+          if [${{env.VERSION}} != ${{env.LATEST_TAG}}]; then
             echo "❌ Error: Version $VERSION package.json version mismatch"
             exit 1
           fi
@@ -37,7 +39,7 @@ jobs:
           command: compress
           source: ${{ github.workspace }}/
           dest: './dist'
-          destfilename: '${{env.NAME}}-${{github.ref_name}}'
+          destfilename: '${{env.NAME}}-${{env.LATEST_TAG}}'
           exclude: '.git .github .gitattributes .gitignore dist'
           format: zip
           includeRoot: 'false'
