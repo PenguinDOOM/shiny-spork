@@ -75,9 +75,9 @@ jobs:
       MAJOR: ${{ needs.extract-semantic-version.outputs.major }}
       MINOR: ${{ needs.extract-semantic-version.outputs.minor }}
       PATCH: ${{ needs.extract-semantic-version.outputs.patch }}
-      UPDATE_MAJOR: ${{ needs.extract_update_version.outputs.major }}
-      UPDATE_MINOR: ${{ needs.extract_update_version.outputs.minor }}
-      UPDATE_PATCH: ${{ needs.extract_update_version.outputs.patch }}
+      UPDATE_MAJOR: ${{ needs.extract-semantic-version.outputs.update_major }}
+      UPDATE_MINOR: ${{ needs.extract-semantic-version.outputs.update_minor }}
+      UPDATE_PATCH: ${{ needs.extract-semantic-version.outputs.update_patch }}
       
     steps:
       - name: Checkout
