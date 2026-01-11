@@ -131,7 +131,7 @@ jobs:
           if { [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PATCH }} ] } || \
              { [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.PACKAGE_MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.PACKAGE_MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PACKAGE_PATCH }} ] }; then
             echo "Update Version: ${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"
-            echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }.${{ env.PATCH }}"
+            echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
             echo "Package Version: ${{ env.PACKAGE_MAJOR }}.${{ env.PACKAGE_MINOR }}.${{ env.PACKAGE_PATCH }}"
             echo "❌ Error: Terminated"
             echo "Reason: Versions are the same"
