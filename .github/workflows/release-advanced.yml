@@ -25,14 +25,11 @@ jobs:
       - name: package.json version check
         run: |
           echo "VERSION=$(jq -r '.version' ./package.json)" >> $GITHUB_ENV
-          echo $VERSION
-          if [$VERSION != ${{github.ref_name}}]; then
+          if [${{env.VERSION}} != ${{github.ref_name}}]; then
             echo "❌ Error: Version $VERSION package.json version mismatch"
             exit 1
           fi
-          echo "NAME=$(jq -r '.version' ./package.json)" >> $GITHUB_ENV
-          ls
-          exit 1
+          echo "NAME=$(jq -r '.name' ./package.json)" >> $GITHUB_ENV
 
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
@@ -55,6 +52,7 @@ jobs:
 
       - name: Create GitHub Release
         run: |
+          exit 1
           gh release create ${{github.ref_name}} \
             --title "${{ steps.metadata.outputs.title }}" \
             --notes "${{ steps.metadata.outputs.release_note }}" \
