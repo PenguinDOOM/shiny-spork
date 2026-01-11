@@ -24,7 +24,7 @@ jobs:
       - name: package.json version check
         run: |
           echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
-          if $VERSION == ${{github.ref_name}}; then
+          if [$VERSION != ${{github.ref_name}}]; then
             echo "❌ Error: Version $VERSION package.json version mismatch"
             exit 1
           fi
