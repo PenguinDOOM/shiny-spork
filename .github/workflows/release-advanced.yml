@@ -117,7 +117,7 @@ jobs:
         with:
           fetch-tags: true
 
-      - name: version check
+      - name: Version check
         run: |
           if [[ ${{ env.UPDATE_MAJOR }} -lt ${{ env.MAJOR }} ]] || \
              [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -lt ${{ env.MINOR }} ]] || \
@@ -136,7 +136,21 @@ jobs:
             exit 1
           fi
           echo "NAME=$(jq -r '.name' ./package.json)" >> $GITHUB_ENV
+
+      - name: Update version
+        run: |
+          LATEST_ID=$(git rev-parse HEAD)
+          CHANGELOG_URL=$(https://github.com/${{ github.repository }}/blob/$LATEST_ID/CHANGELOG.txt
+          LICENSE_URL=$(https://github.com/${{ github.repository }}/blob/$LATEST_ID/LICENSE
+          URL=$(https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}/{{ env.NAME }}-${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}.zip?)
+          jq '.version = "${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"' ./package.json
+          jq '.changelogUrl = "$CHANGELOG_URL"' ./package.json
+          jq '.licensesUrl = "$LICENSE_URL"' ./package.json
+          jq '.url = "$URL"' ./package.json
+          cat package.json
           exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
