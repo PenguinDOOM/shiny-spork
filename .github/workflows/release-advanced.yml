@@ -128,7 +128,7 @@ jobs:
             echo "Reason: Downgrades are not allowed"
             exit 1
           fi
-          if [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PATCH }} ]]; then
+          if [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PATCH }} ]; then
             echo "Update Version: ${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"
             echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
             echo "❌ Error: Terminated"
