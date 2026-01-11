@@ -34,9 +34,7 @@ jobs:
       - name: Describe latest tag
         id: describe_latest_tag
         run: |
-          tag=$(git describe --tags `git rev-list --tags --max-count=1`) 2>/dev/null || echo "❌ Error: Terminated" && 
-                                                                                        echo "Reason: Tag not found" && 
-                                                                                        exit 1
+          tag=$(git describe --tags `git rev-list --tags --max-count=1`) 2>/dev/null || echo "❌ Error: Terminated" && echo "Reason: Tag not found" && exit 1
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
       - id: extract_version
         run: |
