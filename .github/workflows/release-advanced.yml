@@ -119,20 +119,20 @@ jobs:
 
       - name: version check
         run: |
-          if [ ${{env.UPDATE_MAJOR}} -lt ${{env.MAJOR}} ] || [ ${{env.UPDATE_MINOR}} -lt ${{env.MINOR}} ] || [ ${{env.UPDATE_PATCH}} -lt ${{env.PATCH}} ] || \
-             [ ${{env.UPDATE_MAJOR}} -lt ${{env.PACKAGE_MAJOR}} ] || [ ${{env.UPDATE_MINOR}} -lt ${{env.PACKAGE_MINOR}} ] || [ ${{env.UPDATE_PATCH}} -lt ${{env.PACKAGE_PATCH}} ]; then
-            echo "Update Version: ${{env.UPDATE_MAJOR}}.${{env.UPDATE_MINOR}}.${{env.UPDATE_PATCH}}"
-            echo "Current Version: ${{env.MAJOR}}.${{env.MINOR}}.${{env.PATCH}}"
-            echo "Package Version: ${{env.PACKAGE_MAJOR}}.${{env.PACKAGE_MINOR}}.${{env.PACKAGE_PATCH}}"
+          if [ ${{ env.UPDATE_MAJOR }} -lt ${{ env.MAJOR }} ] || [ ${{ env.UPDATE_MINOR }} -lt ${{ env.MINOR }} ] || [ ${{ env.UPDATE_PATCH }} -lt ${{ env.PATCH }} ] || \
+             [ ${{ env.UPDATE_MAJOR }} -lt ${{ env.PACKAGE_MAJOR }} ] || [ ${{ env.UPDATE_MINOR }} -lt ${{ env.PACKAGE_MINOR }} ] || [ ${{ env.UPDATE_PATCH }} -lt ${{ env.PACKAGE_PATCH }} ]; then
+            echo "Update Version: ${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"
+            echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
+            echo "Package Version: ${{ env.PACKAGE_MAJOR }}.${{ env.PACKAGE_MINOR }}.${{ env.PACKAGE_PATCH }}"
             echo "❌ Error: Terminated"
             echo "Reason: Downgrades are not allowed"
             exit 1
           fi
-          if {[ ${{env.UPDATE_MAJOR}} -eq ${{env.MAJOR}} ] && [ ${{env.UPDATE_MINOR}} -eq ${{env.MINOR}} ] && [ ${{env.UPDATE_PATCH}} -eq ${{env.PATCH}} ]} || \
-             {[ ${{env.UPDATE_MAJOR}} -eq ${{env.PACKAGE_MAJOR}} ] && [ ${{env.UPDATE_MINOR}} -eq ${{env.PACKAGE_MINOR}} ] && [ ${{env.UPDATE_PATCH}} -eq ${{env.PACKAGE_PATCH}} ]}; then
-            echo "Update Version: ${{env.UPDATE_MAJOR}}.${{env.UPDATE_MINOR}}.${{env.UPDATE_PATCH}}"
-            echo "Current Version: ${{env.MAJOR}}.${{env.MINOR}}.${{env.PATCH}}"
-            echo "Package Version: ${{env.PACKAGE_MAJOR}}.${{env.PACKAGE_MINOR}}.${{env.PACKAGE_PATCH}}"
+          if { [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PATCH }} ] } || \
+             { [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.PACKAGE_MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.PACKAGE_MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PACKAGE_PATCH }} ] }; then
+            echo "Update Version: ${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"
+            echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }.${{ env.PATCH }}"
+            echo "Package Version: ${{ env.PACKAGE_MAJOR }}.${{ env.PACKAGE_MINOR }}.${{ env.PACKAGE_PATCH }}"
             echo "❌ Error: Terminated"
             echo "Reason: Versions are the same"
             exit 1
@@ -146,7 +146,7 @@ jobs:
           command: compress
           source: ${{ github.workspace }}/
           dest: './dist'
-          destfilename: '${{env.NAME}}-${{env.UPDATE_MAJOR}}.${{env.UPDATE_MINOR}}.${{env.UPDATE_PATCH}}'
+          destfilename: '${{ env.NAME }}-${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}'
           exclude: '.git .github .gitattributes .gitignore dist'
           format: zip
           includeRoot: 'false'
@@ -155,15 +155,15 @@ jobs:
         id: metadata
         run: |
           exit 1
-          echo "title=$(git tag -l --format '%(subject)' ${{github.ref_name}})" >> $GITHUB_OUTPUT
+          echo "title=$(git tag -l --format '%(subject)' ${{ github.ref_name }})" >> $GITHUB_OUTPUT
           echo "release_note<<EOF" >> $GITHUB_OUTPUT
-          git tag -l --format '%(contents:body)' ${{github.ref_name}} >> $GITHUB_OUTPUT
+          git tag -l --format '%(contents:body)' ${{ github.ref_name }} >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         run: |
           exit 1
-          gh release create ${{github.ref_name}} \
+          gh release create ${{ github.ref_name }} \
             --title "${{ steps.metadata.outputs.title }}" \
             --notes "${{ steps.metadata.outputs.release_note }}" \
             ./dist/*
@@ -174,5 +174,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.PAT_FOR_DISPATCH }}
-          repository: ${{github.repository_owner}}/${{env.VPM_Repository}}
+          repository: ${{ github.repository_owner }}/${{ env.VPM_Repository }}
           event-type: update-vpm
