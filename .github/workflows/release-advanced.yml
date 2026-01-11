@@ -140,9 +140,9 @@ jobs:
       - name: Update version
         run: |
           LATEST_ID=$(git rev-parse HEAD)
-          CHANGELOG_URL=$(https://github.com/${{ github.repository }}/blob/$LATEST_ID/CHANGELOG.txt)
-          LICENSE_URL=$(https://github.com/${{ github.repository }}/blob/$LATEST_ID/LICENSE)
-          URL=$(https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}/${{ env.NAME }}-${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}.zip?)
+          CHANGELOG_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/CHANGELOG.txt"
+          LICENSE_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/LICENSE"
+          URL="https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}/${{ env.NAME }}-${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}.zip?"
           jq '.version = "${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"' ./package.json
           jq '.changelogUrl = "$CHANGELOG_URL"' ./package.json
           jq '.licensesUrl = "$LICENSE_URL"' ./package.json
