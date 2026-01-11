@@ -22,6 +22,9 @@ jobs:
       update_major: ${{ steps.extract_version.outputs.update_major }}
       update_minor: ${{ steps.extract_version.outputs.update_minor }}
       update_patch: ${{ steps.extract_version.outputs.update_patch }}
+      package_major: ${{ steps.extract_version.outputs.package_major }}
+      package_minor: ${{ steps.extract_version.outputs.package_minor }}
+      package_patch: ${{ steps.extract_version.outputs.package_patch }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -31,7 +34,9 @@ jobs:
       - name: Describe latest tag
         id: describe_latest_tag
         run: |
-          tag=$(git describe --tags `git rev-list --tags --max-count=1`) 2>/dev/null || echo "v0.0.0"
+          tag=$(git describe --tags `git rev-list --tags --max-count=1`) || echo "❌ Error: Terminated";
+                                                                            echo "Reason: Tag not found";
+                                                                            exit 1
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
       - id: extract_version
         run: |
@@ -48,7 +53,9 @@ jobs:
           
           echo "Detected Version: $MAJOR.$MINOR.$PATCH"
           
-          UPDATE_VERSION=$(jq -r '.version' ./update_trigger.json) 2>/dev/null || echo "v0.0.0"
+          UPDATE_VERSION=$(jq -r '.version' ./update_trigger.json) || echo "❌ Error: Terminated";
+                                                                      echo "Reason: Version not found";
+                                                                      exit 1
           UPDATE_VERSION_NO_V=${UPDATE_VERSION#v}
           
           UPDATE_MAJOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f1)
@@ -60,6 +67,22 @@ jobs:
           echo "update_patch=$UPDATE_PATCH" >> "$GITHUB_OUTPUT"
           
           echo "Detected Update Version: $UPDATE_MAJOR.$UPDATE_MINOR.$UPDATE_PATCH"
+          
+          PACKAGE_VERSION=$(jq -r '.version' ./package.json) || echo "❌ Error: Terminated";
+                                                                echo "Reason: Version not found";
+                                                                exit 1
+          PACKAGE_VERSION_NO_V=${PACKAGE_VERSION#v}
+          
+          PACKAGE_MAJOR=$(echo $PACKAGE_VERSION_NO_V | cut -d. -f1)
+          PACKAGE_MINOR=$(echo $PACKAGE_VERSION_NO_V | cut -d. -f2)
+          PACKAGE_PATCH=$(echo $PACKAGE_VERSION_NO_V | cut -d. -f3 | cut -d- -f1)
+          
+          echo "package_major=$PACKAGE_MAJOR" >> "$GITHUB_OUTPUT"
+          echo "package_minor=$PACKAGE_MINOR" >> "$GITHUB_OUTPUT"
+          echo "package_patch=$PACKAGE_PATCH" >> "$GITHUB_OUTPUT"
+          
+          echo "Detected Package Version: $PACKAGE_MAJOR.$PACKAGE_MINOR.$PACKAGE_PATCH"
+          
 
   release:
     permissions:
@@ -77,6 +100,10 @@ jobs:
       UPDATE_MAJOR: ${{ needs.extract-semantic-version.outputs.update_major }}
       UPDATE_MINOR: ${{ needs.extract-semantic-version.outputs.update_minor }}
       UPDATE_PATCH: ${{ needs.extract-semantic-version.outputs.update_patch }}
+      PACKAGE_MAJOR: ${{ needs.extract-semantic-version.outputs.package_major }}
+      PACKAGE_MINOR: ${{ needs.extract-semantic-version.outputs.package_minor }}
+      PACKAGE_PATCH: ${{ needs.extract-semantic-version.outputs.package_patch }}
+      
       
     steps:
       - name: Checkout
@@ -84,31 +111,21 @@ jobs:
         with:
           fetch-tags: true
 
-      - name: Setup version
-        run: |
-          echo "$MAJOR"
-          echo "$MINOR"
-          echo "$PATCH"
-          echo "$UPDATE_MAJOR"
-          echo "$UPDATE_MINOR"
-          echo "$UPDATE_PATCH"
-          exit 1
-
       - name: version check
         run: |
-          UPDATE_VERSION=$(jq -r '.version' ./update_trigger.json)
-          VERSION=$(jq -r '.version' ./package.json)
-          NAME=$(jq -r '.name' ./package.json)
-          if [$VERSION != ${{env.LATEST_TAG}}]; then
-            echo "❌ Error: Version $VERSION package.json version mismatch"
+          if [$UPDATE_MAJOR -lt $MAJOR] || [$UPDATE_MINOR -lt $MINOR] || [$UPDATE_PATCH -lt $PATCH] || \
+             [$UPDATE_MAJOR -lt $PACKAGE_MAJOR] || [$UPDATE_MINOR -lt $PACKAGE_MINOR] || [$UPDATE_PATCH -lt $PACKAGE_PATCH]; then
+            echo "❌ Error: Terminated"
+            echo "Reason: Downgrades are not allowed"
             exit 1
           fi
-          if [$VERSION != ${{env.LATEST_TAG}}]; then
-            echo "❌ Error: Version $VERSION package.json version mismatch"
+          if [$UPDATE_MAJOR -eq $MAJOR] || [$UPDATE_MINOR -eq $MINOR] || [$UPDATE_PATCH -eq $PATCH] || \
+             [$UPDATE_MAJOR -eq $PACKAGE_MAJOR] || [$UPDATE_MINOR -eq $PACKAGE_MINOR] || [$UPDATE_PATCH -eq $PACKAGE_PATCH]; then
+            echo "❌ Error: Terminated"
+            echo "Reason: Versions are the same"
             exit 1
           fi
-          echo "$VERSION" >> $GITHUB_ENV
-          echo "$NAME" >> $GITHUB_ENV
+          echo "NAME=$(jq -r '.name' ./package.json)" >> $GITHUB_ENV
 
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
@@ -116,7 +133,7 @@ jobs:
           command: compress
           source: ${{ github.workspace }}/
           dest: './dist'
-          destfilename: '${{env.NAME}}-${{env.LATEST_TAG}}'
+          destfilename: '${{env.NAME}}-${{env.UPDATE_MAJOR}}.${{env.UPDATE_MINOR}}.${{env.UPDATE_PATCH}}'
           exclude: '.git .github .gitattributes .gitignore dist'
           format: zip
           includeRoot: 'false'
@@ -124,6 +141,7 @@ jobs:
       - name: Extract release info
         id: metadata
         run: |
+          exit 1
           echo "title=$(git tag -l --format '%(subject)' ${{github.ref_name}})" >> $GITHUB_OUTPUT
           echo "release_note<<EOF" >> $GITHUB_OUTPUT
           git tag -l --format '%(contents:body)' ${{github.ref_name}} >> $GITHUB_OUTPUT
