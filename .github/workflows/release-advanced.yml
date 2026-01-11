@@ -119,14 +119,14 @@ jobs:
 
       - name: version check
         run: |
-          if [$UPDATE_MAJOR -lt $MAJOR] || [$UPDATE_MINOR -lt $MINOR] || [$UPDATE_PATCH -lt $PATCH] || \
-             [$UPDATE_MAJOR -lt $PACKAGE_MAJOR] || [$UPDATE_MINOR -lt $PACKAGE_MINOR] || [$UPDATE_PATCH -lt $PACKAGE_PATCH]; then
+          if [${{env.UPDATE_MAJOR}} -lt ${{env.MAJOR}}] || [${{env.UPDATE_MINOR}} -lt ${{env.MINOR}}] || [${{env.UPDATE_PATCH}} -lt ${{env.PATCH}}] || \
+             [${{env.UPDATE_MAJOR}} -lt ${{env.PACKAGE_MAJOR}}] || [${{env.UPDATE_MINOR}} -lt ${{env.PACKAGE_MINOR}}] || [$UPDATE_PATCH}} -lt ${{env.PACKAGE_PATCH}}]; then
             echo "❌ Error: Terminated"
             echo "Reason: Downgrades are not allowed"
             exit 1
           fi
-          if [$UPDATE_MAJOR -eq $MAJOR] || [$UPDATE_MINOR -eq $MINOR] || [$UPDATE_PATCH -eq $PATCH] || \
-             [$UPDATE_MAJOR -eq $PACKAGE_MAJOR] || [$UPDATE_MINOR -eq $PACKAGE_MINOR] || [$UPDATE_PATCH -eq $PACKAGE_PATCH]; then
+          if [${{env.UPDATE_MAJOR}} -eq ${{env.MAJOR}}] || [${{env.UPDATE_MINOR}} -eq ${{env.MINOR}}] || [${{env.UPDATE_PATCH}} -eq ${{env.PATCH}}] || \
+             [${{env.UPDATE_MAJOR}} -eq ${{env.PACKAGE_MAJOR}}] || [${{env.UPDATE_MINOR}} -eq ${{env.PACKAGE_MINOR}}] || [${{env.UPDATE_PATCH}} -eq ${{env.PACKAGE_PATCH}}]; then
             echo "❌ Error: Terminated"
             echo "Reason: Versions are the same"
             exit 1
