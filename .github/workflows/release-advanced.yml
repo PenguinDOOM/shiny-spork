@@ -19,6 +19,7 @@ jobs:
       major: ${{ steps.extract_version.outputs.major }}
       minor: ${{ steps.extract_version.outputs.minor }}
       patch: ${{ steps.extract_version.outputs.patch }}
+      update_version: ${{ steps.extract_version.outputs.update_version }}
       update_major: ${{ steps.extract_version.outputs.update_major }}
       update_minor: ${{ steps.extract_version.outputs.update_minor }}
       update_patch: ${{ steps.extract_version.outputs.update_patch }}
@@ -66,6 +67,7 @@ jobs:
           UPDATE_MINOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f2)
           UPDATE_PATCH=$(echo $UPDATE_VERSION_NO_V | cut -d. -f3 | cut -d- -f1)
           
+          echo "update_version=$UPDATE_VERSION_NO_V" >> "$GITHUB_OUTPUT"
           echo "update_major=$UPDATE_MAJOR" >> "$GITHUB_OUTPUT"
           echo "update_minor=$UPDATE_MINOR" >> "$GITHUB_OUTPUT"
           echo "update_patch=$UPDATE_PATCH" >> "$GITHUB_OUTPUT"
@@ -103,6 +105,7 @@ jobs:
       MAJOR: ${{ needs.extract-semantic-version.outputs.major }}
       MINOR: ${{ needs.extract-semantic-version.outputs.minor }}
       PATCH: ${{ needs.extract-semantic-version.outputs.patch }}
+      UPDATE_VERSION: ${{ needs.extract-semantic-version.outputs.update_version }}
       UPDATE_MAJOR: ${{ needs.extract-semantic-version.outputs.update_major }}
       UPDATE_MINOR: ${{ needs.extract-semantic-version.outputs.update_minor }}
       UPDATE_PATCH: ${{ needs.extract-semantic-version.outputs.update_patch }}
@@ -112,24 +115,27 @@ jobs:
       
       
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
         with:
           fetch-tags: true
+          
+      - name: Setup
+        run: |
+          
 
       - name: Version check
         run: |
           if [[ ${{ env.UPDATE_MAJOR }} -lt ${{ env.MAJOR }} ]] || \
              [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -lt ${{ env.MINOR }} ]] || \
              [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} && ${{ env.UPDATE_PATCH }} -lt ${{ env.PATCH }} ]]; then
-            echo "Update Version: ${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"
+            echo "Update Version: ${{ UPDATE_VERSION }}"
             echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
             echo "❌ Error: Terminated"
             echo "Reason: Downgrades are not allowed"
             exit 1
           fi
           if [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PATCH }} ]; then
-            echo "Update Version: ${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"
+            echo "Update Version: ${{ UPDATE_VERSION }}"
             echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
             echo "❌ Error: Terminated"
             echo "Reason: Versions are the same"
@@ -142,8 +148,8 @@ jobs:
           LATEST_ID=$(git rev-parse HEAD)
           CHANGELOG_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/CHANGELOG.txt"
           LICENSE_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/LICENSE"
-          URL="https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}/${{ env.NAME }}-${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}.zip?"
-          jq --arg v "${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}" \
+          URL="https://github.com/${{ github.repository }}/releases/download/${{ UPDATE_VERSION }}/${{ env.NAME }}-${{ UPDATE_VERSION }}.zip?"
+          jq --arg v "${{ UPDATE_VERSION }}" \
              --arg cl "$CHANGELOG_URL" \
              --arg lic "$LICENSE_URL" \
              --arg url "$URL" \
@@ -151,7 +157,18 @@ jobs:
              ./package.json > ./package.json.tmp
           mv ./package.json.tmp ./package.json
           cat package.json
-          exit 1
+
+      - name: Commit and push update
+        uses: suzuki-shunsuke/commit-action@v0.1.0
+        with:
+          fail_on_self_push: false
+          branch: master
+          commit_message: "Updated Ver. ${{ UPDATE_VERSION }}"
+
+      - name: Update tag
+        run: |
+          git tag -s ${{ UPDATE_VERSION }}
+          git push origin ${{ UPDATE_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -166,28 +183,12 @@ jobs:
           format: zip
           includeRoot: 'false'
 
-      - name: Extract release info
-        id: metadata
-        run: |
-          exit 1
-          echo "title=$(git tag -l --format '%(subject)' ${{ github.ref_name }})" >> $GITHUB_OUTPUT
-          echo "release_note<<EOF" >> $GITHUB_OUTPUT
-          git tag -l --format '%(contents:body)' ${{ github.ref_name }} >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
       - name: Create GitHub Release
         run: |
-          exit 1
-          gh release create ${{ github.ref_name }} \
-            --title "${{ steps.metadata.outputs.title }}" \
-            --notes "${{ steps.metadata.outputs.release_note }}" \
+          PRE_TAG=$(git ls-remote --tags --sort=v:refname origin 'v*.*.*' | tail -n 2 | head -n 1 | cut -f 2 | cut -d '/' -f 3)
+          gh release create ${{ UPDATE_VERSION }} \
+            --title "${{ UPDATE_VERSION }}" \
+            --notes "**Full Changelog**: https://github.com/${{ github.repository }}/compare/$PRE_TAG...${{ UPDATE_VERSION }}" \
             ./dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Trigger VPM Repository Workflow
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.PAT_FOR_DISPATCH }}
-          repository: ${{ github.repository_owner }}/${{ env.VPM_Repository }}
-          event-type: update-vpm
