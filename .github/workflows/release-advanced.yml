@@ -34,7 +34,11 @@ jobs:
       - name: Describe latest tag
         id: describe_latest_tag
         run: |
-          tag=$(git describe --tags `git rev-list --tags --max-count=1`) 2>/dev/null || echo "❌ Error: Terminated" && echo "Reason: Tag not found" && exit 1
+          tag=$(git describe --tags `git rev-list --tags --max-count=1`) 2>/dev/null || {
+          echo "❌ Error: Terminated"
+          echo "Reason: Tag not found"
+          exit 1
+          }
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
       - id: extract_version
         run: |
@@ -51,9 +55,11 @@ jobs:
           
           echo "Detected Version: $MAJOR.$MINOR.$PATCH"
           
-          UPDATE_VERSION=$(jq -r '.version' ./update_trigger.json) 2>/dev/null || echo "❌ Error: Terminated" && 
-                                                                                  echo "Reason: Version not found" && 
-                                                                                  exit 1
+          UPDATE_VERSION=$(jq -r '.version' ./update_trigger.json) 2>/dev/null || {
+          echo "❌ Error: Terminated"
+          echo "Reason: Version not found"
+          exit 1
+          }
           UPDATE_VERSION_NO_V=${UPDATE_VERSION#v}
           
           UPDATE_MAJOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f1)
@@ -66,9 +72,11 @@ jobs:
           
           echo "Detected Update Version: $UPDATE_MAJOR.$UPDATE_MINOR.$UPDATE_PATCH"
           
-          PACKAGE_VERSION=$(jq -r '.version' ./package.json) 2>/dev/null || echo "❌ Error: Terminated" && 
-                                                                            echo "Reason: Version not found" && 
-                                                                            exit 1
+          PACKAGE_VERSION=$(jq -r '.version' ./package.json) 2>/dev/null || {
+          echo "❌ Error: Terminated"
+          echo "Reason: Version not found"
+          exit 1
+          }
           PACKAGE_VERSION_NO_V=${PACKAGE_VERSION#v}
           
           PACKAGE_MAJOR=$(echo $PACKAGE_VERSION_NO_V | cut -d. -f1)
