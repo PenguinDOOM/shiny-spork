@@ -128,14 +128,14 @@ jobs:
           if [[ ${{ env.UPDATE_MAJOR }} -lt ${{ env.MAJOR }} ]] || \
              [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -lt ${{ env.MINOR }} ]] || \
              [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} && ${{ env.UPDATE_PATCH }} -lt ${{ env.PATCH }} ]]; then
-            echo "Update Version: ${{ UPDATE_VERSION }}"
+            echo "Update Version: ${{ env.UPDATE_VERSION }}"
             echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
             echo "❌ Error: Terminated"
             echo "Reason: Downgrades are not allowed"
             exit 1
           fi
           if [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PATCH }} ]; then
-            echo "Update Version: ${{ UPDATE_VERSION }}"
+            echo "Update Version: ${{ env.UPDATE_VERSION }}"
             echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
             echo "❌ Error: Terminated"
             echo "Reason: Versions are the same"
@@ -148,8 +148,8 @@ jobs:
           LATEST_ID=$(git rev-parse HEAD)
           CHANGELOG_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/CHANGELOG.txt"
           LICENSE_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/LICENSE"
-          URL="https://github.com/${{ github.repository }}/releases/download/${{ UPDATE_VERSION }}/${{ env.NAME }}-${{ UPDATE_VERSION }}.zip?"
-          jq --arg v "${{ UPDATE_VERSION }}" \
+          URL="https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_VERSION }}/${{ env.NAME }}-${{ env.UPDATE_VERSION }}.zip?"
+          jq --arg v "${{ env.UPDATE_VERSION }}" \
              --arg cl "$CHANGELOG_URL" \
              --arg lic "$LICENSE_URL" \
              --arg url "$URL" \
@@ -163,12 +163,12 @@ jobs:
         with:
           fail_on_self_push: false
           branch: master
-          commit_message: "Updated Ver. ${{ UPDATE_VERSION }}"
+          commit_message: "Updated Ver. ${{ env.UPDATE_VERSION }}"
 
       - name: Update tag
         run: |
-          git tag -s ${{ UPDATE_VERSION }}
-          git push origin ${{ UPDATE_VERSION }}
+          git tag -s ${{ env.UPDATE_VERSION }}
+          git push origin ${{ env.UPDATE_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -186,9 +186,9 @@ jobs:
       - name: Create GitHub Release
         run: |
           PRE_TAG=$(git ls-remote --tags --sort=v:refname origin 'v*.*.*' | tail -n 2 | head -n 1 | cut -f 2 | cut -d '/' -f 3)
-          gh release create ${{ UPDATE_VERSION }} \
-            --title "${{ UPDATE_VERSION }}" \
-            --notes "**Full Changelog**: https://github.com/${{ github.repository }}/compare/$PRE_TAG...${{ UPDATE_VERSION }}" \
+          gh release create ${{ env.UPDATE_VERSION }} \
+            --title "${{ env.UPDATE_VERSION }}" \
+            --notes "**Full Changelog**: https://github.com/${{ github.repository }}/compare/$PRE_TAG...${{ env.UPDATE_VERSION }}" \
             ./dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
