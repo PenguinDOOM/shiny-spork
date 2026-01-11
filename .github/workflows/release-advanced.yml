@@ -121,7 +121,7 @@ jobs:
         run: |
           if [[ ${{ env.UPDATE_MAJOR }} -lt ${{ env.MAJOR }} ]] || \
              [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -lt ${{ env.MINOR }} ]] || \
-             [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} && ${{ env.UPDATE_PATCH }} -lt ${{ env.PATCH }} ]; then
+             [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} && ${{ env.UPDATE_PATCH }} -lt ${{ env.PATCH }} ]]; then
             echo "Update Version: ${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}"
             echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
             echo "❌ Error: Terminated"
