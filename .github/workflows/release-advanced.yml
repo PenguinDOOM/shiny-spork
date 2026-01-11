@@ -19,6 +19,9 @@ jobs:
       major: ${{ steps.extract_version.outputs.major }}
       minor: ${{ steps.extract_version.outputs.minor }}
       patch: ${{ steps.extract_version.outputs.patch }}
+      update_major: ${{ steps.extract_update_version.outputs.major }}
+      update_minor: ${{ steps.extract_update_version.outputs.minor }}
+      update_patch: ${{ steps.extract_update_version.outputs.patch }}
     steps:
       - uses: actions/checkout@v6
         with:
