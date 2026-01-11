@@ -32,7 +32,7 @@ jobs:
         id: describe_latest_tag
         run: |
           tag=$(git describe --tags `git rev-list --tags --max-count=1`) 2>/dev/null || echo "v0.0.0"
-          echo "tag=v0.0.0" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
       - id: extract_version
         run: |
           tag=${{ steps.describe_latest_tag.outputs.tag }}
@@ -56,9 +56,11 @@ jobs:
           MINOR=$(echo $UPDATE_VERSION_NO_V | cut -d. -f2)
           PATCH=$(echo $UPDATE_VERSION_NO_V | cut -d. -f3 | cut -d- -f1)
           
-          echo "major=$major" >> "$GITHUB_OUTPUT"
-          echo "minor=$minor" >> "$GITHUB_OUTPUT"
-          echo "patch=$patch" >> "$GITHUB_OUTPUT"
+          echo "update_major=$major" >> "$GITHUB_OUTPUT"
+          echo "update_minor=$minor" >> "$GITHUB_OUTPUT"
+          echo "update_patch=$patch" >> "$GITHUB_OUTPUT"
+          
+          echo "Detected Version: $MAJOR.$MINOR.$PATCH"
 
   release:
     permissions:
