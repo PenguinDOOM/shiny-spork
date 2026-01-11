@@ -120,7 +120,7 @@ jobs:
       - name: version check
         run: |
           if [${{env.UPDATE_MAJOR}} -lt ${{env.MAJOR}}] || [${{env.UPDATE_MINOR}} -lt ${{env.MINOR}}] || [${{env.UPDATE_PATCH}} -lt ${{env.PATCH}}] || \
-             [${{env.UPDATE_MAJOR}} -lt ${{env.PACKAGE_MAJOR}}] || [${{env.UPDATE_MINOR}} -lt ${{env.PACKAGE_MINOR}}] || [$UPDATE_PATCH}} -lt ${{env.PACKAGE_PATCH}}]; then
+             [${{env.UPDATE_MAJOR}} -lt ${{env.PACKAGE_MAJOR}}] || [${{env.UPDATE_MINOR}} -lt ${{env.PACKAGE_MINOR}}] || [${{env.UPDATE_PATCH}} -lt ${{env.PACKAGE_PATCH}}]; then
             echo "❌ Error: Terminated"
             echo "Reason: Downgrades are not allowed"
             exit 1
@@ -132,6 +132,7 @@ jobs:
             exit 1
           fi
           echo "NAME=$(jq -r '.name' ./package.json)" >> $GITHUB_ENV
+          exit 1
 
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
