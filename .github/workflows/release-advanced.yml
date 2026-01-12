@@ -1,3 +1,4 @@
+# Use the unprefixed semantic version of the tag
 name: Release-Advanced
 
 on:
@@ -7,15 +8,62 @@ on:
   workflow_dispatch:
 
 env:
-  VPM_Repository: lilToonMore
+  VPM_REPOSITORY: lilToonMore
+  PACKAGE_NAME: jp.penguin.liltoonmore.advanced
+  PACKAGE_DISPLAYNAME: lilToonMore Advanced
+  PACKAGE_AUTHOR_NAME: Penguin
+  PACKAGE_UNITY_VERSION: 2022.3
+  PACKAGE_DESCRIPTION: Customized lilToon.
+  PACKAGE_VPM_DEPENDENCIES: jp.lilxyzw.liltoon: 2.3.2
+  PACKAGE_CHANGELOG_FILE: CHANGELOG.txt
+  PACKAGE_LICENSE_FILE: LICENSE
+  PACKAGE_KEYWORDS: Toon, Shader, Material
+  PACKAGE_LEGACYFOLDERS: Assets\\lilToonMore: , Assets\\lilToonMore Advanced:
 
 jobs:
+  Verify-Commit-Signature:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_PUBLIC_KEY }}" | gpg --import
+      - name: Verify Commit Signature
+        run: |
+          FILE_PATH="update_trigger.json"
+          CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD)
+          echo "Files changed in HEAD: $CHANGED_FILES"
+          
+          if ! echo "$CHANGED_FILES" | grep -q "^$FILE_PATH$"; then
+            echo "❌ Error: Terminated"
+            echo "Reason: $FILE_PATH is not the latest commit"
+            exit 1
+          fi
+          
+          LOG_OUTPUT=$(git log --show-signature -1 ./update_trigger.json)
+          echo "$LOG_OUTPUT"
+          
+          if echo "$LOG_OUTPUT" | grep -q "gpg: Good signature"; then
+            echo "✅ Commit signature verification successful"
+          else
+            echo "❌ Error: Terminated"
+            echo "Reason: Commit signature verification failed"
+            exit 1
+          fi
+
   extract-semantic-version:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
+    needs: Verify-Commit-Signature
     outputs:
+      current_version: ${{ steps.extract_version.outputs.current_version }}
       major: ${{ steps.extract_version.outputs.major }}
       minor: ${{ steps.extract_version.outputs.minor }}
       patch: ${{ steps.extract_version.outputs.patch }}
@@ -50,6 +98,7 @@ jobs:
           MINOR=$(echo $tag_without_v | cut -d. -f2)
           PATCH=$(echo $tag_without_v | cut -d. -f3 | cut -d- -f1)
           
+          echo "current_version=$tag_without_v" >> "$GITHUB_OUTPUT"
           echo "major=$MAJOR" >> "$GITHUB_OUTPUT"
           echo "minor=$MINOR" >> "$GITHUB_OUTPUT"
           echo "patch=$PATCH" >> "$GITHUB_OUTPUT"
@@ -102,6 +151,7 @@ jobs:
         shell: bash
     needs: extract-semantic-version
     env:
+      CURRENT_VERSION: ${{ needs.extract-semantic-version.outputs.current_version }}
       MAJOR: ${{ needs.extract-semantic-version.outputs.major }}
       MINOR: ${{ needs.extract-semantic-version.outputs.minor }}
       PATCH: ${{ needs.extract-semantic-version.outputs.patch }}
@@ -129,34 +179,57 @@ jobs:
              [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -lt ${{ env.MINOR }} ]] || \
              [[ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} && ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} && ${{ env.UPDATE_PATCH }} -lt ${{ env.PATCH }} ]]; then
             echo "Update Version: ${{ env.UPDATE_VERSION }}"
-            echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
+            echo "Current Version: ${{ env.CURRENT_VERSION }}"
             echo "❌ Error: Terminated"
             echo "Reason: Downgrades are not allowed"
             exit 1
           fi
           if [ ${{ env.UPDATE_MAJOR }} -eq ${{ env.MAJOR }} ] && [ ${{ env.UPDATE_MINOR }} -eq ${{ env.MINOR }} ] && [ ${{ env.UPDATE_PATCH }} -eq ${{ env.PATCH }} ]; then
             echo "Update Version: ${{ env.UPDATE_VERSION }}"
-            echo "Current Version: ${{ env.MAJOR }}.${{ env.MINOR }}.${{ env.PATCH }}"
+            echo "Current Version: ${{ env.CURRENT_VERSION }}"
             echo "❌ Error: Terminated"
             echo "Reason: Versions are the same"
             exit 1
           fi
-          echo "NAME=$(jq -r '.name' ./package.json)" >> $GITHUB_ENV
 
       - name: Update version
         run: |
           LATEST_ID=$(git rev-parse HEAD)
-          CHANGELOG_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/CHANGELOG.txt"
-          LICENSE_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/LICENSE"
+          CHANGELOG_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/${{ env.PACKAGE_CHANGELOG_FILE }}"
+          LICENSE_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/${{ env.PACKAGE_LICENSE_FILE }}"
           URL="https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_VERSION }}/${{ env.NAME }}-${{ env.UPDATE_VERSION }}.zip?"
-          jq --arg v "${{ env.UPDATE_VERSION }}" \
-             --arg cl "$CHANGELOG_URL" \
-             --arg lic "$LICENSE_URL" \
-             --arg url "$URL" \
-             '.version = $v | .changelogUrl = $cl | .licensesUrl = $lic | .url = $url' \
-             ./package.json > ./package.json.tmp
+          LICENSE=$(gh api repos/${{ github.repository }} --jq '.license.spdx_id')
+          jq --arg name         "${{ env.PACKAGE_NAME }}" \
+             --arg display_name "${{ PACKAGE_DISPLAYNAME }}" \
+             --arg ver          "${{ env.UPDATE_VERSION }}" \
+             --arg author_names "${{ PACKAGE_AUTHOR_NAME }}" \
+             --arg unity_ver    "${{ PACKAGE_UNITY_VERSION }}" \
+             --arg desc         "${{ PACKAGE_DESCRIPTION }}" \
+             --arg vpm_raw      "${{ PACKAGE_VPM_DEPENDENCIES }}" \
+             --arg cl_url       "$CHANGELOG_URL" \
+             --arg lic_url      "$LICENSE_URL" \
+             --arg license      "$LICENSE" \
+             --arg keywords_raw "${{ PACKAGE_KEYWORDS" \
+             --arg url          "$URL" \
+             --arg legacy_raw   "${{ PACKAGE_LEGACYFOLDERS" \
+             '{
+               "name": $name,
+               "displayName": $display_name,
+               "version": $ver,
+               "author": ($author_names | split(",") | map(gsub("^\\s+|\\s+$"; "")) | {name: .[0]}),
+               "unity": $unity_ver,
+               "description": $desc,
+               "vpmDependencies": ($vpm_raw | split(",") | map(split(":")) | reduce .[] as $item ({}; .[$item[0]|gsub("^\\s+|\\s+$"; "")] = ($item[1]|gsub("^\\s+|\\s+$"; "")))),
+               "changelogUrl": $cl_url,
+               "licensesUrl": $lic_url,
+               "license": $license,
+               "keywords": ($keywords_raw | split(",") | map(gsub("^\\s+|\\s+$"; ""))),
+               "url": $url,
+               "legacyFolders": ($legacy_raw | split(",") | map(split(":")) | reduce .[] as $item ({}; .[$item[0]|gsub("^\\s+|\\s+$"; "")] = ($item[1]|gsub("^\\s+|\\s+$"; ""))))
+             }' > ./package.json.tmp
           mv ./package.json.tmp ./package.json
           cat package.json
+          exit 1
 
       - name: Commit and push update
         uses: suzuki-shunsuke/commit-action@v0.1.0
@@ -166,11 +239,9 @@ jobs:
           commit_message: "Updated Ver. ${{ env.UPDATE_VERSION }}"
 
       - name: Update tag
-        run: |
-          git tag -s ${{ env.UPDATE_VERSION }}
-          git push origin ${{ env.UPDATE_VERSION }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{ env.UPDATE_VERSION }}"
 
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
@@ -184,11 +255,9 @@ jobs:
           includeRoot: 'false'
 
       - name: Create GitHub Release
-        run: |
-          PRE_TAG=$(git ls-remote --tags --sort=v:refname origin 'v*.*.*' | tail -n 2 | head -n 1 | cut -f 2 | cut -d '/' -f 3)
-          gh release create ${{ env.UPDATE_VERSION }} \
-            --title "${{ env.UPDATE_VERSION }}" \
-            --notes "**Full Changelog**: https://github.com/${{ github.repository }}/compare/$PRE_TAG...${{ env.UPDATE_VERSION }}" \
-            ./dist/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.UPDATE_VERSION }}
+          name: ${{ env.UPDATE_VERSION }}
+          body: "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ env.CURRENT_VERSION }}...${{ env.UPDATE_VERSION }}"
+          bodyFile: "./dist/*"
