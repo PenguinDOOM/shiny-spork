@@ -187,7 +187,8 @@ jobs:
           URL="https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_VERSION }}/${{ env.NAME }}-${{ env.UPDATE_VERSION }}.zip?"
           LICENSE=$(gh api repos/${{ github.repository }} --jq '.license.spdx_id')
           
-          jq --arg name         "${{ env.PACKAGE_NAME }}" \
+          jq -n \
+             --arg name         "${{ env.PACKAGE_NAME }}" \
              --arg display_name "${{ env.PACKAGE_DISPLAYNAME }}" \
              --arg ver          "${{ env.UPDATE_VERSION }}" \
              --arg author_names "${{ env.PACKAGE_AUTHOR_NAME }}" \
