@@ -280,6 +280,5 @@ jobs:
           artifacts: "${{ github.workspace }}/dist/${{ env.PACKAGE_NAME }}-${{ env.UPDATE_VERSION }}.zip"
           artifactContentType: zip
           generateReleaseNotes: true
-          generateReleaseNotesPreviousTag: true
           name: ${{ env.UPDATE_VERSION }}
           tag: ${{ env.UPDATE_VERSION }}
