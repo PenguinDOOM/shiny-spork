@@ -248,6 +248,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
+          ref: ${{ github.ref_name }}
           fetch-tags: true
       - name: Fetch all tags
         run: git fetch --tags
@@ -271,4 +272,4 @@ jobs:
           tag: ${{ env.UPDATE_VERSION }}
           name: ${{ env.UPDATE_VERSION }}
           body: "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ env.CURRENT_VERSION }}...${{ env.UPDATE_VERSION }}"
-          bodyFile: "./dist/${{ env.PACKAGE_NAME }}-${{ env.UPDATE_VERSION }}.zip"
+          bodyFile: "${{ github.workspace }}/dist/${{ env.PACKAGE_NAME }}-${{ env.UPDATE_VERSION }}.zip"
