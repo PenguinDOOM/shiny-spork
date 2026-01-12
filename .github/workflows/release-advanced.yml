@@ -17,7 +17,6 @@ env:
   PACKAGE_LICENSE_FILE: "LICENSE"
   PACKAGE_KEYWORDS: "Toon, Shader, Material"
   PACKAGE_LEGACYFOLDERS: "Assets\\lilToonMore: , Assets\\lilToonMore Advanced:"
-
 jobs:
   Verify-Commit-Signature:
     runs-on: ubuntu-latest
@@ -235,7 +234,7 @@ jobs:
     defaults:
       run:
         shell: bash
-    needs: Update
+    needs: extract-semantic-version
     env:
       CURRENT_VERSION: ${{ needs.extract-semantic-version.outputs.current_version }}
       MAJOR: ${{ needs.extract-semantic-version.outputs.major }}
