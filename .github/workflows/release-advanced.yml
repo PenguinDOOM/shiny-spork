@@ -216,8 +216,8 @@ jobs:
                "legacyFolders": ($legacy_raw | split(",") | map(split(":")) | reduce .[] as $item ({}; .[$item[0]|gsub("^\\s+|\\s+$"; "")] = ($item[1]|gsub("^\\s+|\\s+$"; ""))))
              }' > ./package.json.tmp
           
-          mv ./package.json.tmp ./package.json
-          cat package.json
+          : # mv ./package.json.tmp ./package.json
+          cat package.json.tmp
           exit 1
         env:
          GH_TOKEN: ${{ github.token }}
