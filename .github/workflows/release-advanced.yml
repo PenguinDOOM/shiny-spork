@@ -18,7 +18,7 @@ env:
   PACKAGE_KEYWORDS: "Toon, Shader, Material"
   PACKAGE_LEGACYFOLDERS: "Assets\\lilToonMore: , Assets\\lilToonMore Advanced:"
 jobs:
-  Verify-Commit-Signature:
+  verify-commit-signature:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -57,7 +57,7 @@ jobs:
     defaults:
       run:
         shell: bash
-    needs: Verify-Commit-Signature
+    needs: verify-commit-signature
     outputs:
       current_version: ${{ steps.extract_version.outputs.current_version }}
       major: ${{ steps.extract_version.outputs.major }}
@@ -135,10 +135,9 @@ jobs:
           echo "package_patch=$PACKAGE_PATCH" >> "$GITHUB_OUTPUT"
           
           echo "Detected Package Version: $PACKAGE_MAJOR.$PACKAGE_MINOR.$PACKAGE_PATCH"
-  Update:
+  update:
     permissions:
       contents: write
-    name: Update
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -226,15 +225,14 @@ jobs:
           fail_on_self_push: false
           branch: master
           commit_message: "Updated Ver. ${{ env.UPDATE_VERSION }}"
-  Release:
+  release:
     permissions:
       contents: write
-    name: Release
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
-    needs: extract-semantic-version
+    needs: [extract-semantic-version, update]
     env:
       CURRENT_VERSION: ${{ needs.extract-semantic-version.outputs.current_version }}
       MAJOR: ${{ needs.extract-semantic-version.outputs.major }}
