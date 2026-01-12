@@ -219,6 +219,8 @@ jobs:
           mv ./package.json.tmp ./package.json
           cat package.json
           exit 1
+        env:
+         GH_TOKEN: ${{ github.token }}
       - name: Commit and push update
         uses: suzuki-shunsuke/commit-action@v0.1.0
         with:
