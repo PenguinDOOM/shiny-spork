@@ -136,10 +136,10 @@ jobs:
           echo "package_patch=$PACKAGE_PATCH" >> "$GITHUB_OUTPUT"
           
           echo "Detected Package Version: $PACKAGE_MAJOR.$PACKAGE_MINOR.$PACKAGE_PATCH"
-  release:
+  Update:
     permissions:
       contents: write
-    name: Release-Advanced
+    name: Update
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -227,8 +227,33 @@ jobs:
           fail_on_self_push: false
           branch: master
           commit_message: "Updated Ver. ${{ env.UPDATE_VERSION }}"
-      - name: Pull latest commit
-        run: git pull
+  Release:
+    permissions:
+      contents: write
+    name: Release
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    needs: Update
+    env:
+      CURRENT_VERSION: ${{ needs.extract-semantic-version.outputs.current_version }}
+      MAJOR: ${{ needs.extract-semantic-version.outputs.major }}
+      MINOR: ${{ needs.extract-semantic-version.outputs.minor }}
+      PATCH: ${{ needs.extract-semantic-version.outputs.patch }}
+      UPDATE_VERSION: ${{ needs.extract-semantic-version.outputs.update_version }}
+      UPDATE_MAJOR: ${{ needs.extract-semantic-version.outputs.update_major }}
+      UPDATE_MINOR: ${{ needs.extract-semantic-version.outputs.update_minor }}
+      UPDATE_PATCH: ${{ needs.extract-semantic-version.outputs.update_patch }}
+      PACKAGE_MAJOR: ${{ needs.extract-semantic-version.outputs.package_major }}
+      PACKAGE_MINOR: ${{ needs.extract-semantic-version.outputs.package_minor }}
+      PACKAGE_PATCH: ${{ needs.extract-semantic-version.outputs.package_patch }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-tags: true
+      - name: Fetch all tags
+        run: git fetch --tags
       - name: Update tag
         uses: rickstaa/action-create-tag@v1
         with:
