@@ -227,6 +227,8 @@ jobs:
           fail_on_self_push: false
           branch: master
           commit_message: "Updated Ver. ${{ env.UPDATE_VERSION }}"
+      - name: Pull latest commit
+        run: git pull
       - name: Update tag
         uses: rickstaa/action-create-tag@v1
         with:
