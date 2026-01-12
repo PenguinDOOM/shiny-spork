@@ -1,7 +1,7 @@
 {
   "name": "jp.penguin.liltoonmore.advanced",
   "displayName": "lilToonMore Advanced",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "author": {
     "name": "Penguin"
   },
@@ -10,15 +10,15 @@
   "vpmDependencies": {
     "jp.lilxyzw.liltoon": "2.3.2"
   },
-  "changelogUrl": "https://github.com/PenguinDOOM/shiny-spork/blob/0d9bea650dfc8c097712aefe8e1955f4221603c9/CHANGELOG.txt",
-  "licensesUrl": "https://github.com/PenguinDOOM/shiny-spork/blob/0d9bea650dfc8c097712aefe8e1955f4221603c9/LICENSE",
+  "changelogUrl": "https://github.com/PenguinDOOM/shiny-spork/blob/8fcb53b8be5664062e78f307e4857f3fde080d59/CHANGELOG.txt",
+  "licensesUrl": "https://github.com/PenguinDOOM/shiny-spork/blob/8fcb53b8be5664062e78f307e4857f3fde080d59/LICENSE",
   "license": "MIT",
   "keywords": [
     "Toon",
     "Shader",
     "Material"
   ],
-  "url": "https://github.com/PenguinDOOM/shiny-spork/releases/download/0.0.9/jp.penguin.liltoonmore.advanced-0.0.9.zip?",
+  "url": "https://github.com/PenguinDOOM/shiny-spork/releases/download/0.1.0/jp.penguin.liltoonmore.advanced-0.1.0.zip?",
   "legacyFolders": {
     "Assets\\lilToonMore": "",
     "Assets\\lilToonMore Advanced": ""
