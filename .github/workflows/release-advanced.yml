@@ -184,7 +184,7 @@ jobs:
           LATEST_ID=$(git rev-parse HEAD)
           CHANGELOG_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/${{ env.PACKAGE_CHANGELOG_FILE }}"
           LICENSE_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/${{ env.PACKAGE_LICENSE_FILE }}"
-          URL="https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_VERSION }}/${{ env.NAME }}-${{ env.UPDATE_VERSION }}.zip?"
+          URL="https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_VERSION }}/${{ env.PACKAGE_NAME }}-${{ env.UPDATE_VERSION }}.zip?"
           LICENSE=$(gh api repos/${{ github.repository }} --jq '.license.spdx_id')
           
           jq -n \
@@ -217,9 +217,8 @@ jobs:
                "legacyFolders": ($legacy_raw | split(",") | map(split(":")) | reduce .[] as $item ({}; .[$item[0]|gsub("^\\s+|\\s+$"; "")] = ($item[1]|gsub("^\\s+|\\s+$"; ""))))
              }' > ./package.json.tmp
           
-          : # mv ./package.json.tmp ./package.json
-          cat package.json.tmp
-          exit 1
+          mv ./package.json.tmp ./package.json
+          cat package.json
         env:
          GH_TOKEN: ${{ github.token }}
       - name: Commit and push update
@@ -238,7 +237,7 @@ jobs:
           command: compress
           source: ${{ github.workspace }}/
           dest: './dist'
-          destfilename: '${{ env.NAME }}-${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}'
+          destfilename: '${{ env.PACKAGE_NAME }}-${{ env.UPDATE_MAJOR }}.${{ env.UPDATE_MINOR }}.${{ env.UPDATE_PATCH }}'
           exclude: '.git .github .gitattributes .gitignore dist'
           format: zip
           includeRoot: 'false'
