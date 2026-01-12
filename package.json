@@ -10,8 +10,8 @@
   "vpmDependencies": {
     "jp.lilxyzw.liltoon": "2.3.2"
   },
-  "changelogUrl": "https://github.com/PenguinDOOM/shiny-spork/blob/b6a4bdc4653f6fe834713adbec520a2f76ad14f7/CHANGELOG.txt",
-  "licensesUrl": "https://github.com/PenguinDOOM/shiny-spork/blob/b6a4bdc4653f6fe834713adbec520a2f76ad14f7/LICENSE",
+  "changelogUrl": "https://github.com/PenguinDOOM/shiny-spork/blob/0d9bea650dfc8c097712aefe8e1955f4221603c9/CHANGELOG.txt",
+  "licensesUrl": "https://github.com/PenguinDOOM/shiny-spork/blob/0d9bea650dfc8c097712aefe8e1955f4221603c9/LICENSE",
   "license": "MIT",
   "keywords": [
     "Toon",
