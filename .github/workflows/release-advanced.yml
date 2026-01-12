@@ -253,10 +253,16 @@ jobs:
           fetch-tags: true
       - name: Fetch all tags
         run: git fetch --tags
+      - name: Get commit_sha
+        run: |
+          echo "LATEST_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+        env:
+         GH_TOKEN: ${{ github.token }}
       - name: Update tag
         uses: rickstaa/action-create-tag@v1
         with:
           tag: "${{ env.UPDATE_VERSION }}"
+          commit_sha: "${{ env.LATEST_SHA }}"
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
         with:
@@ -273,4 +279,4 @@ jobs:
           tag: ${{ env.UPDATE_VERSION }}
           name: ${{ env.UPDATE_VERSION }}
           body: "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ env.CURRENT_VERSION }}...${{ env.UPDATE_VERSION }}"
-          bodyFile: "${{ github.workspace }}/dist/${{ env.PACKAGE_NAME }}-${{ env.UPDATE_VERSION }}.zip"
+          bodyFile: "/github/workspace/dist/${{ env.PACKAGE_NAME }}-${{ env.UPDATE_VERSION }}.zip"
