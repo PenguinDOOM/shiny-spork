@@ -8,17 +8,17 @@ on:
   workflow_dispatch:
 
 env:
-  VPM_REPOSITORY: lilToonMore
-  PACKAGE_NAME: jp.penguin.liltoonmore.advanced
-  PACKAGE_DISPLAYNAME: lilToonMore Advanced
-  PACKAGE_AUTHOR_NAME: Penguin
-  PACKAGE_UNITY_VERSION: 2022.3
-  PACKAGE_DESCRIPTION: Customized lilToon.
-  PACKAGE_VPM_DEPENDENCIES: jp.lilxyzw.liltoon: 2.3.2
-  PACKAGE_CHANGELOG_FILE: CHANGELOG.txt
-  PACKAGE_LICENSE_FILE: LICENSE
-  PACKAGE_KEYWORDS: Toon, Shader, Material
-  PACKAGE_LEGACYFOLDERS: Assets\\lilToonMore: , Assets\\lilToonMore Advanced:
+  VPM_REPOSITORY: "lilToonMore"
+  PACKAGE_NAME: "jp.penguin.liltoonmore.advanced"
+  PACKAGE_DISPLAYNAME: "lilToonMore Advanced"
+  PACKAGE_AUTHOR_NAME: "Penguin"
+  PACKAGE_UNITY_VERSION: "2022.3"
+  PACKAGE_DESCRIPTION: "Customized lilToon".
+  PACKAGE_VPM_DEPENDENCIES: "jp.lilxyzw.liltoon: 2.3.2"
+  PACKAGE_CHANGELOG_FILE: "CHANGELOG.txt"
+  PACKAGE_LICENSE_FILE: "LICENSE"
+  PACKAGE_KEYWORDS: "Toon, Shader, Material"
+  PACKAGE_LEGACYFOLDERS: "Assets\\lilToonMore: , Assets\\lilToonMore Advanced:"
 
 jobs:
   Verify-Commit-Signature:
@@ -78,8 +78,10 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-tags: true
+
       - name: Fetch all tags
         run: git fetch --tags
+
       - name: Describe latest tag
         id: describe_latest_tag
         run: |
@@ -89,6 +91,7 @@ jobs:
           exit 1
           }
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
       - id: extract_version
         run: |
           tag=${{ steps.describe_latest_tag.outputs.tag }}
@@ -139,7 +142,6 @@ jobs:
           echo "package_patch=$PACKAGE_PATCH" >> "$GITHUB_OUTPUT"
           
           echo "Detected Package Version: $PACKAGE_MAJOR.$PACKAGE_MINOR.$PACKAGE_PATCH"
-          
 
   release:
     permissions:
@@ -162,16 +164,10 @@ jobs:
       PACKAGE_MAJOR: ${{ needs.extract-semantic-version.outputs.package_major }}
       PACKAGE_MINOR: ${{ needs.extract-semantic-version.outputs.package_minor }}
       PACKAGE_PATCH: ${{ needs.extract-semantic-version.outputs.package_patch }}
-      
-      
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-tags: true
-          
-      - name: Setup
-        run: |
-          
 
       - name: Version check
         run: |
