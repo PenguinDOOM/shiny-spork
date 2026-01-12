@@ -1,12 +1,10 @@
 # Use the unprefixed semantic version of the tag
 name: Release-Advanced
-
 on:
   push:
     paths:
       - update_trigger.json
   workflow_dispatch:
-
 env:
   VPM_REPOSITORY: "lilToonMore"
   PACKAGE_NAME: "jp.penguin.liltoonmore.advanced"
@@ -55,7 +53,6 @@ jobs:
             echo "Reason: Commit signature verification failed"
             exit 1
           fi
-
   extract-semantic-version:
     runs-on: ubuntu-latest
     defaults:
@@ -78,10 +75,8 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-tags: true
-
       - name: Fetch all tags
         run: git fetch --tags
-
       - name: Describe latest tag
         id: describe_latest_tag
         run: |
@@ -91,7 +86,6 @@ jobs:
           exit 1
           }
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-
       - id: extract_version
         run: |
           tag=${{ steps.describe_latest_tag.outputs.tag }}
@@ -142,7 +136,6 @@ jobs:
           echo "package_patch=$PACKAGE_PATCH" >> "$GITHUB_OUTPUT"
           
           echo "Detected Package Version: $PACKAGE_MAJOR.$PACKAGE_MINOR.$PACKAGE_PATCH"
-
   release:
     permissions:
       contents: write
@@ -168,7 +161,6 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-tags: true
-
       - name: Version check
         run: |
           if [[ ${{ env.UPDATE_MAJOR }} -lt ${{ env.MAJOR }} ]] || \
@@ -187,7 +179,6 @@ jobs:
             echo "Reason: Versions are the same"
             exit 1
           fi
-
       - name: Update version
         run: |
           LATEST_ID=$(git rev-parse HEAD)
@@ -195,19 +186,20 @@ jobs:
           LICENSE_URL="https://github.com/${{ github.repository }}/blob/$LATEST_ID/${{ env.PACKAGE_LICENSE_FILE }}"
           URL="https://github.com/${{ github.repository }}/releases/download/${{ env.UPDATE_VERSION }}/${{ env.NAME }}-${{ env.UPDATE_VERSION }}.zip?"
           LICENSE=$(gh api repos/${{ github.repository }} --jq '.license.spdx_id')
+          
           jq --arg name         "${{ env.PACKAGE_NAME }}" \
-             --arg display_name "${{ PACKAGE_DISPLAYNAME }}" \
+             --arg display_name "${{ env.PACKAGE_DISPLAYNAME }}" \
              --arg ver          "${{ env.UPDATE_VERSION }}" \
-             --arg author_names "${{ PACKAGE_AUTHOR_NAME }}" \
-             --arg unity_ver    "${{ PACKAGE_UNITY_VERSION }}" \
-             --arg desc         "${{ PACKAGE_DESCRIPTION }}" \
-             --arg vpm_raw      "${{ PACKAGE_VPM_DEPENDENCIES }}" \
+             --arg author_names "${{ env.PACKAGE_AUTHOR_NAME }}" \
+             --arg unity_ver    "${{ env.PACKAGE_UNITY_VERSION }}" \
+             --arg desc         "${{ env.PACKAGE_DESCRIPTION }}" \
+             --arg vpm_raw      "${{ env.PACKAGE_VPM_DEPENDENCIES }}" \
              --arg cl_url       "$CHANGELOG_URL" \
              --arg lic_url      "$LICENSE_URL" \
              --arg license      "$LICENSE" \
-             --arg keywords_raw "${{ PACKAGE_KEYWORDS" \
+             --arg keywords_raw "${{ env.PACKAGE_KEYWORDS }}" \
              --arg url          "$URL" \
-             --arg legacy_raw   "${{ PACKAGE_LEGACYFOLDERS" \
+             --arg legacy_raw   "${{ env.PACKAGE_LEGACYFOLDERS }}" \
              '{
                "name": $name,
                "displayName": $display_name,
@@ -223,22 +215,20 @@ jobs:
                "url": $url,
                "legacyFolders": ($legacy_raw | split(",") | map(split(":")) | reduce .[] as $item ({}; .[$item[0]|gsub("^\\s+|\\s+$"; "")] = ($item[1]|gsub("^\\s+|\\s+$"; ""))))
              }' > ./package.json.tmp
+          
           mv ./package.json.tmp ./package.json
           cat package.json
           exit 1
-
       - name: Commit and push update
         uses: suzuki-shunsuke/commit-action@v0.1.0
         with:
           fail_on_self_push: false
           branch: master
           commit_message: "Updated Ver. ${{ env.UPDATE_VERSION }}"
-
       - name: Update tag
         uses: rickstaa/action-create-tag@v1
         with:
           tag: "${{ env.UPDATE_VERSION }}"
-
       - name: Create zip file
         uses: somaz94/compress-decompress@v1
         with:
@@ -249,7 +239,6 @@ jobs:
           exclude: '.git .github .gitattributes .gitignore dist'
           format: zip
           includeRoot: 'false'
-
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
